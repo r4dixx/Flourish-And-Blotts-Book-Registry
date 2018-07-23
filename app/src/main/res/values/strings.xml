@@ -8,4 +8,11 @@
     <string name="action_insert_dummy_data">Actio, dummy book!</string>
     <string name="action_delete_all_data">Obliviate&#8230;</string>
     <string name="action_save_current_data">Petrificus Totalus</string>
+
+    <!-- New entry activity -->
+    <string name="hint_title">Title</string>
+    <string name="hint_author">Author</string>
+    <string name="hint_edition">Edition</string>
+    <string name="hint_year">Publication date</string>
+    <string name="hint_subject">Class subject</string>
 </resources>

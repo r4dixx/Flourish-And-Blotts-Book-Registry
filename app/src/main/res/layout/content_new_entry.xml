@@ -1,7 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="@dimen/activity_margins"
+    tools:context=".NewEntryActivity">
+
+    <EditText
+        android:id="@+id/edit_book_title"
+        style="@style/EditTextTheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_title"
+        android:inputType="textCapWords" />
+
+    <EditText
+        android:id="@+id/edit_book_author"
+        style="@style/EditTextTheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_author"
+        android:inputType="textCapWords" />
+
+    <EditText
+        android:id="@+id/edit_book_edition"
+        style="@style/EditTextTheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_edition"
+        android:inputType="textCapWords" />
+
+    <EditText
+        android:id="@+id/edit_book_year"
+        style="@style/EditTextTheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_year"
+        android:inputType="textCapWords" />
+    <Spinner
+        android:id="@+id/spinner_subject"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:prompt="@string/hint_subject"
+        android:spinnerMode="dialog" />
 
 </LinearLayout>
