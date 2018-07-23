@@ -23,7 +23,7 @@ public class DbHelper extends SQLiteOpenHelper {
                         + BookEntry._ID + " INTEGER" + " PRIMARY KEY AUTOINCREMENT, "
                         + BookEntry.COLUMN_TITLE + " TEXT" + " NOT NULL, "
                         + BookEntry.COLUMN_AUTHOR + " TEXT" + " NOT NULL,"
-                        + BookEntry.COLUMN_EDITION + " TEXT, "
+                        + BookEntry.COLUMN_PUBLISHER + " TEXT, "
                         + BookEntry.COLUMN_YEAR + " INTEGER" + " NOT NULL, "
                         + BookEntry.COLUMN_SUBJECT + " INTEGER" + " NOT NULL" + " DEFAULT 0);";
 

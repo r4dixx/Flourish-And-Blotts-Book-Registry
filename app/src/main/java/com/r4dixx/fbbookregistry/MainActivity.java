@@ -1,5 +1,6 @@
 package com.r4dixx.fbbookregistry;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 BookEntry._ID,
                 BookEntry.COLUMN_TITLE,
                 BookEntry.COLUMN_AUTHOR,
-                BookEntry.COLUMN_EDITION,
+                BookEntry.COLUMN_PUBLISHER,
                 BookEntry.COLUMN_YEAR,
                 BookEntry.COLUMN_SUBJECT
         };
@@ -83,16 +84,16 @@ public class MainActivity extends AppCompatActivity {
                     + BookEntry._ID + " | "
                     + BookEntry.COLUMN_TITLE + " | "
                     + BookEntry.COLUMN_AUTHOR + " | "
-                    + BookEntry.COLUMN_EDITION + " | "
+                    + BookEntry.COLUMN_PUBLISHER + " | "
                     + BookEntry.COLUMN_YEAR + " | "
                     + BookEntry.COLUMN_SUBJECT
-                    + "\n\n");
+                    + "\n");
 
             // Executing this outside the while loop as it more efficient this way performance-wise. Otherwise getColumnIndex() would be called for each row)
             int idIndex = cursor.getColumnIndex((BookEntry._ID));
             int titleIndex = cursor.getColumnIndex((BookEntry.COLUMN_TITLE));
             int authorIndex = cursor.getColumnIndex((BookEntry.COLUMN_AUTHOR));
-            int editionIndex = cursor.getColumnIndex((BookEntry.COLUMN_EDITION));
+            int publisherIndex = cursor.getColumnIndex((BookEntry.COLUMN_PUBLISHER));
             int yearIndex = cursor.getColumnIndex((BookEntry.COLUMN_YEAR));
             int subjectIndex = cursor.getColumnIndex((BookEntry.COLUMN_SUBJECT));
 
@@ -101,15 +102,15 @@ public class MainActivity extends AppCompatActivity {
                 int currentId = cursor.getInt((idIndex));
                 String currentTitle = cursor.getString(titleIndex);
                 String currentAuthor = cursor.getString(authorIndex);
-                String currentEdition = cursor.getString(editionIndex);
+                String currentPublisher = cursor.getString(publisherIndex);
                 int currentYear = cursor.getInt(yearIndex);
                 int currentSubject = cursor.getInt(subjectIndex);
 
-                tv.append((currentId + "|"
-                        + currentTitle + "|"
-                        + currentAuthor + "|"
-                        + currentEdition + "|"
-                        + currentYear + "|"
+                tv.append(("\n" + currentId + " | "
+                        + currentTitle + " | "
+                        + currentAuthor + " | "
+                        + currentPublisher + " | "
+                        + currentYear + " | "
                         + currentSubject));
             }
         } finally {
@@ -117,11 +118,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(com.r4dixx.fbbookregistry.R.menu.menu_main, menu);
         return true;
+    }
+
+    private void newEntry() {
+
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        ContentValues vals = new ContentValues();
+
+        vals.put(BookEntry.COLUMN_TITLE, "Fantastic Beasts and Where to Find Them");
+        vals.put(BookEntry.COLUMN_AUTHOR, "Newton Scamander");
+        vals.put(BookEntry.COLUMN_PUBLISHER, "Obscurus Books");
+        vals.put(BookEntry.COLUMN_YEAR, "1927");
+        vals.put(BookEntry.COLUMN_SUBJECT, BookEntry.COLUMN_SUBJECT);
+
+        db.insert(BookEntry.TABLE_NAME, null, vals);
     }
 
     @Override
@@ -130,10 +145,10 @@ public class MainActivity extends AppCompatActivity {
 
         switch (id) {
             case com.r4dixx.fbbookregistry.R.id.action_insert_dummy_data:
-                // TODO insert and display data
+                newEntry();
+                displayDbInfo();
                 return true;
             case com.r4dixx.fbbookregistry.R.id.action_delete_data:
-                // TODO reset/delete database and display it
                 return true;
         }
 
