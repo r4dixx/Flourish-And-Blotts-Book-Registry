@@ -12,7 +12,7 @@
     <!-- New entry activity -->
     <string name="hint_title">Title</string>
     <string name="hint_author">Author</string>
-    <string name="hint_edition">Edition</string>
-    <string name="hint_year">Publication date</string>
+    <string name="hint_edition">Edition (leave blank if not applicable)</string>
+    <string name="hint_year">Publication year</string>
     <string name="hint_subject">Class subject</string>
 </resources>
