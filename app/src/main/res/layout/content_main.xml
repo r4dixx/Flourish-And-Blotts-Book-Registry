@@ -2,6 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_below="@id/toolbar_main_container"
     android:orientation="vertical">
+
+    <!--TODO: Modify heavily after being sure the database queries behave correctly in MainActivity. This is just for test and debugging purposes-->
+    <TextView
+        android:id="@+id/text_view_books"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/activity_margins" />
 
 </LinearLayout>
