@@ -130,7 +130,7 @@ public class NewEntryActivity extends AppCompatActivity {
         values.put(BookEntry.COLUMN_AUTHOR, authorString);
         values.put(BookEntry.COLUMN_PUBLISHER, publisherString);
         values.put(BookEntry.COLUMN_YEAR, year);
-        values.put(BookEntry.COLUMN_YEAR, mSubject);
+        values.put(BookEntry.COLUMN_SUBJECT, mSubject);
 
         long newRowId = db.insert(BookEntry.TABLE_NAME, null, values);
 
