@@ -12,7 +12,33 @@
     <!-- New entry activity -->
     <string name="hint_title">Title</string>
     <string name="hint_author">Author</string>
-    <string name="hint_publisher">Edition (leave blank if not applicable)</string>
+    <string name="hint_publisher">Publisher (leave blank if not applicable)</string>
     <string name="hint_year">Publication year</string>
     <string name="hint_subject">Class subject</string>
+
+    <!-- New entry - Spinner - subjects -->
+    <string name="subject_unknown">Unclassifiable</string>
+    <string name="subject_alchemy">Alchemy</string>
+    <string name="subject_ancient_runes">Ancient Runes</string>
+    <string name="subject_ancient_studies">Ancient Studies</string>
+    <string name="subject_apparition">Apparition</string>
+    <string name="subject_arithmancy">Arithmancy</string>
+    <string name="subject_art">Art</string>
+    <string name="subject_astronomy">Astronomy</string>
+    <string name="subject_charms">Charms</string>
+    <string name="subject_creatures">Care of Magical Creatures</string>
+    <string name="subject_dark_arts">Defence Against The Dark Arts</string>
+    <string name="subject_divination">Divination</string>
+    <string name="subject_flying">Flying</string>
+    <string name="subject_herbology">Herbology</string>
+    <string name="subject_magic_history">Magic History</string>
+    <string name="subject_magical_theory">Magical Theory</string>
+    <string name="subject_muggles_studies">Muggle Studies</string>
+    <string name="subject_muggle_art">Muggle Art</string>
+    <string name="subject_music">Music</string>
+    <string name="subject_potions">Potions</string>
+    <string name="subject_transfiguration">Transfiguration</string>
+    <string name="subject_xylomancy">Xylomancy</string>
+
+
 </resources>

@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
         vals.put(BookEntry.COLUMN_AUTHOR, "Newton Scamander");
         vals.put(BookEntry.COLUMN_PUBLISHER, "Obscurus Books");
         vals.put(BookEntry.COLUMN_YEAR, "1927");
-        vals.put(BookEntry.COLUMN_SUBJECT, BookEntry.COLUMN_SUBJECT);
+        vals.put(BookEntry.COLUMN_SUBJECT, BookEntry.SUBJECT_CREATURES);
 
         db.insert(BookEntry.TABLE_NAME, null, vals);
     }

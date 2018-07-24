@@ -21,6 +21,7 @@ public final class Contract {
         public static final int SUBJECT_UNKNOWN = 0;
 
         public static final int SUBJECT_ALCHEMY = 1;
+        public static final int SUBJECT_ANCIENT_RUNES = 19;
         public static final int SUBJECT_ANCIENT_STUDIES = 2;
         public static final int SUBJECT_APPARITION = 3;
         public static final int SUBJECT_ARITHMANCY = 4;
@@ -38,7 +39,6 @@ public final class Contract {
         public static final int SUBJECT_MUGGLE_ART = 16;
         public static final int SUBJECT_MUSIC = 17;
         public static final int SUBJECT_POTIONS = 18;
-        public static final int SUBJECT_ANCIENT_RUNES = 19;
         public static final int SUBJECT_TRANFIGURATION = 20;
         public static final int SUBJECT_XYLOMANCY = 21;
 

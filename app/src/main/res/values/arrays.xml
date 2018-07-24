@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- These are the options displayed in the gender drop-down Spinner -->
+    <string-array name="array_subjects">
+        <item>@string/subject_unknown</item>
+        <item>@string/subject_alchemy</item>
+        <item>@string/subject_ancient_runes</item>
+        <item>@string/subject_ancient_studies</item>
+        <item>@string/subject_apparition</item>
+        <item>@string/subject_arithmancy</item>
+        <item>@string/subject_art</item>
+        <item>@string/subject_astronomy</item>
+        <item>@string/subject_charms</item>
+        <item>@string/subject_creatures</item>
+        <item>@string/subject_dark_arts</item>
+        <item>@string/subject_divination</item>
+        <item>@string/subject_flying</item>
+        <item>@string/subject_herbology</item>
+        <item>@string/subject_magic_history</item>
+        <item>@string/subject_magical_theory</item>
+        <item>@string/subject_muggles_studies</item>
+        <item>@string/subject_muggle_art</item>
+        <item>@string/subject_music</item>
+        <item>@string/subject_potions</item>
+        <item>@string/subject_transfiguration</item>
+        <item>@string/subject_xylomancy</item>
+    </string-array>
+</resources>
