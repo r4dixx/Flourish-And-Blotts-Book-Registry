@@ -151,9 +151,10 @@ public class MainActivity extends AppCompatActivity {
                 displayDbInfo();
                 return true;
             case com.r4dixx.fbbookregistry.R.id.action_delete_data:
-                this.deleteDatabase("books.db");
-                displayDbInfo();
+                mDbHelper.close();
+                this.deleteDatabase(DbHelper.DB_NAME);
                 new DbHelper(this);
+                displayDbInfo();
                 return true;
         }
 

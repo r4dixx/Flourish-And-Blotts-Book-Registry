@@ -9,7 +9,7 @@ import com.r4dixx.fbbookregistry.database.Contract.BookEntry;
 
 public class DbHelper extends SQLiteOpenHelper {
 
-    private static final String DB_NAME = "books.db";
+    public static final String DB_NAME = "books.db";
     private static final int DB_VERSION = 1;
 
     public DbHelper(Context context) {
