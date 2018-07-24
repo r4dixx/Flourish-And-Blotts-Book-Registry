@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(com.r4dixx.fbbookregistry.R.layout.activity_main);
         Toolbar toolbar = findViewById(com.r4dixx.fbbookregistry.R.id.toolbar_main);
+        toolbar.setOverflowIcon(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_bug_report_white_24dp));
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = findViewById(com.r4dixx.fbbookregistry.R.id.fab);
