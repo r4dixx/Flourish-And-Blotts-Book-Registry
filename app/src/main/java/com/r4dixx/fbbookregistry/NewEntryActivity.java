@@ -20,6 +20,8 @@ import android.widget.Toast;
 import com.r4dixx.fbbookregistry.database.Contract.BookEntry;
 import com.r4dixx.fbbookregistry.database.DbHelper;
 
+import static com.r4dixx.fbbookregistry.database.Contract.BookEntry.SUBJECT_UNKNOWN;
+
 public class NewEntryActivity extends AppCompatActivity {
 
     private EditText mTitleET;
@@ -27,9 +29,12 @@ public class NewEntryActivity extends AppCompatActivity {
     private EditText mPublisherET;
     private EditText mYearET;
     private Spinner mSubjectSpin;
+    private EditText mPriceET;
+    private EditText mQuantityET;
+    private EditText mSupplierET;
+    private EditText mSupplierPhoneET;
 
-
-    private int mSubject = 0;
+    private int mSubject = SUBJECT_UNKNOWN;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,8 +47,11 @@ public class NewEntryActivity extends AppCompatActivity {
         mAuthorET = findViewById(R.id.edit_book_author);
         mPublisherET = findViewById(R.id.edit_book_publisher);
         mYearET = findViewById(R.id.edit_book_year);
+        mPriceET = findViewById(R.id.edit_book_price);
+        mQuantityET = findViewById(R.id.edit_book_quantity);
+        mSupplierET =findViewById(R.id.edit_book_supplier);
+        mSupplierPhoneET =findViewById(R.id.edit_book_phone);
         mSubjectSpin = findViewById(R.id.spinner_subject);
-
         setSpinner();
     }
 
@@ -103,14 +111,14 @@ public class NewEntryActivity extends AppCompatActivity {
                     } else if (selected.equals(getString(R.string.subject_xylomancy))) {
                         mSubject = BookEntry.SUBJECT_XYLOMANCY;
                     } else {
-                        mSubject = BookEntry.SUBJECT_UNKNOWN;
+                        mSubject = SUBJECT_UNKNOWN;
                     }
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                mSubject = 0;
+                mSubject = SUBJECT_UNKNOWN;
             }
         });
     }
@@ -119,18 +127,27 @@ public class NewEntryActivity extends AppCompatActivity {
         DbHelper mDbHelper = new DbHelper(this);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
-        String titleString = mTitleET.getText().toString().trim();
-        String authorString = mAuthorET.getText().toString().trim();
-        String publisherString = mPublisherET.getText().toString().trim();
-        String yearString = mYearET.getText().toString().trim();
-        int year = Integer.parseInt(yearString);
+        String title = mTitleET.getText().toString().trim();
+        String author = mAuthorET.getText().toString().trim();
+        String publisher = mPublisherET.getText().toString().trim();
+        String year = mYearET.getText().toString().trim();
+        String priceString = mPriceET.getText().toString().trim();
+        int price = Integer.parseInt(priceString);
+        String quantityString = mQuantityET.getText().toString().trim();
+        int quantity = Integer.parseInt(quantityString);
+        String supplier = mSupplierET.getText().toString().trim();
+        String phone = mSupplierPhoneET.getText().toString().trim();
 
         ContentValues values = new ContentValues();
-        values.put(BookEntry.COLUMN_TITLE, titleString);
-        values.put(BookEntry.COLUMN_AUTHOR, authorString);
-        values.put(BookEntry.COLUMN_PUBLISHER, publisherString);
+        values.put(BookEntry.COLUMN_TITLE, title);
+        values.put(BookEntry.COLUMN_AUTHOR, author);
+        values.put(BookEntry.COLUMN_PUBLISHER, publisher);
         values.put(BookEntry.COLUMN_YEAR, year);
         values.put(BookEntry.COLUMN_SUBJECT, mSubject);
+        values.put(BookEntry.COLUMN_PRICE, price);
+        values.put(BookEntry.COLUMN_QUANTITY, quantity);
+        values.put(BookEntry.COLUMN_SUPPLIER, supplier);
+        values.put(BookEntry.COLUMN_SUPPLIER_PHONE, phone);
 
         long newRowId = db.insert(BookEntry.TABLE_NAME, null, values);
 

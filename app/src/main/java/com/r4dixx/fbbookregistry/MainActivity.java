@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(com.r4dixx.fbbookregistry.R.layout.activity_main);
         Toolbar toolbar = findViewById(com.r4dixx.fbbookregistry.R.id.toolbar_main);
-        toolbar.setOverflowIcon(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_bug_report_white_24dp));
+        toolbar.setOverflowIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_bug_report_white_24dp));
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = findViewById(com.r4dixx.fbbookregistry.R.id.fab);
@@ -60,8 +60,13 @@ public class MainActivity extends AppCompatActivity {
                 BookEntry.COLUMN_AUTHOR,
                 BookEntry.COLUMN_PUBLISHER,
                 BookEntry.COLUMN_YEAR,
-                BookEntry.COLUMN_SUBJECT
+                BookEntry.COLUMN_SUBJECT,
+                BookEntry.COLUMN_PRICE,
+                BookEntry.COLUMN_QUANTITY,
+                BookEntry.COLUMN_SUPPLIER,
+                BookEntry.COLUMN_SUPPLIER_PHONE
         };
+
         // Cursor contains all rows and order them by COLUMN_TITLE
         Cursor cursor = db.query(
                 BookEntry.TABLE_NAME,
@@ -88,7 +93,11 @@ public class MainActivity extends AppCompatActivity {
                     + BookEntry.COLUMN_AUTHOR + " | "
                     + BookEntry.COLUMN_PUBLISHER + " | "
                     + BookEntry.COLUMN_YEAR + " | "
-                    + BookEntry.COLUMN_SUBJECT
+                    + BookEntry.COLUMN_SUBJECT + " | "
+                    + BookEntry.COLUMN_PRICE + " | "
+                    + BookEntry.COLUMN_QUANTITY + " | "
+                    + BookEntry.COLUMN_SUPPLIER + " | "
+                    + BookEntry.COLUMN_SUPPLIER_PHONE
                     + "\n");
 
             // Executing this outside the while loop as it more efficient this way performance-wise. Otherwise getColumnIndex() would be called for each row)
@@ -98,6 +107,10 @@ public class MainActivity extends AppCompatActivity {
             int publisherIndex = cursor.getColumnIndex((BookEntry.COLUMN_PUBLISHER));
             int yearIndex = cursor.getColumnIndex((BookEntry.COLUMN_YEAR));
             int subjectIndex = cursor.getColumnIndex((BookEntry.COLUMN_SUBJECT));
+            int priceIndex = cursor.getColumnIndex((BookEntry.COLUMN_PRICE));
+            int quantityIndex = cursor.getColumnIndex((BookEntry.COLUMN_QUANTITY));
+            int supplierIndex = cursor.getColumnIndex((BookEntry.COLUMN_SUPPLIER));
+            int supplierPhoneIndex = cursor.getColumnIndex((BookEntry.COLUMN_SUPPLIER_PHONE));
 
             while (cursor.moveToNext()) {
 
@@ -105,15 +118,25 @@ public class MainActivity extends AppCompatActivity {
                 String currentTitle = cursor.getString(titleIndex);
                 String currentAuthor = cursor.getString(authorIndex);
                 String currentPublisher = cursor.getString(publisherIndex);
-                int currentYear = cursor.getInt(yearIndex);
+                String currentYear = cursor.getString(yearIndex);
                 int currentSubject = cursor.getInt(subjectIndex);
+                int currentPrice = cursor.getInt(priceIndex);
+                int currentQuantity = cursor.getInt(quantityIndex);
+                String currentSupplier = cursor.getString(supplierIndex);
+                String currentSupplierPhone = cursor.getString(supplierPhoneIndex);
 
                 tv.append(("\n" + currentId + " | "
                         + currentTitle + " | "
                         + currentAuthor + " | "
                         + currentPublisher + " | "
                         + currentYear + " | "
-                        + currentSubject));
+                        + currentSubject + " | "
+                        + currentPrice + " | "
+                        + currentQuantity + " | "
+                        + currentSupplier + " | "
+                        + currentSupplierPhone
+                        + "\n"
+                ));
             }
         } finally {
             cursor.close();
@@ -137,6 +160,10 @@ public class MainActivity extends AppCompatActivity {
         vals.put(BookEntry.COLUMN_PUBLISHER, "Obscurus Books");
         vals.put(BookEntry.COLUMN_YEAR, "1927");
         vals.put(BookEntry.COLUMN_SUBJECT, BookEntry.SUBJECT_CREATURES);
+        vals.put(BookEntry.COLUMN_PRICE, "2");
+        vals.put(BookEntry.COLUMN_QUANTITY, BookEntry.QUANTITY_DEFAULT);
+        vals.put(BookEntry.COLUMN_SUPPLIER, "Albus Dumbledore");
+        vals.put(BookEntry.COLUMN_SUPPLIER_PHONE, "6054756961");
 
         db.insert(BookEntry.TABLE_NAME, null, vals);
     }

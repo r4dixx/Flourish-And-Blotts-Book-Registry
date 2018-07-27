@@ -6,6 +6,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.r4dixx.fbbookregistry.database.Contract.BookEntry;
 
+import static com.r4dixx.fbbookregistry.database.Contract.BookEntry.QUANTITY_DEFAULT;
+import static com.r4dixx.fbbookregistry.database.Contract.BookEntry.SUBJECT_UNKNOWN;
+
 
 public class DbHelper extends SQLiteOpenHelper {
 
@@ -22,10 +25,15 @@ public class DbHelper extends SQLiteOpenHelper {
                 "CREATE TABLE " + BookEntry.TABLE_NAME + " ("
                         + BookEntry._ID + " INTEGER" + " PRIMARY KEY AUTOINCREMENT, "
                         + BookEntry.COLUMN_TITLE + " TEXT" + " NOT NULL, "
-                        + BookEntry.COLUMN_AUTHOR + " TEXT" + " NOT NULL,"
+                        + BookEntry.COLUMN_AUTHOR + " TEXT" + " NOT NULL, "
                         + BookEntry.COLUMN_PUBLISHER + " TEXT, "
-                        + BookEntry.COLUMN_YEAR + " INTEGER" + " NOT NULL, "
-                        + BookEntry.COLUMN_SUBJECT + " INTEGER" + " NOT NULL" + " DEFAULT 0);";
+                        + BookEntry.COLUMN_YEAR + " STRING" + " NOT NULL, "
+                        + BookEntry.COLUMN_SUBJECT + " INTEGER" + " NOT NULL" + " DEFAULT " + SUBJECT_UNKNOWN + ", "
+                        + BookEntry.COLUMN_PRICE + " INTEGER" + " NOT NULL, "
+                        + BookEntry.COLUMN_QUANTITY + " INTEGER" + " NOT NULL" + " DEFAULT " + QUANTITY_DEFAULT + ", "
+                        + BookEntry.COLUMN_SUPPLIER + " TEXT, "
+                        + BookEntry.COLUMN_SUPPLIER_PHONE + " TEXT"
+                        + ");";
 
         db.execSQL(SQL_CREATE_TABLE);
     }
