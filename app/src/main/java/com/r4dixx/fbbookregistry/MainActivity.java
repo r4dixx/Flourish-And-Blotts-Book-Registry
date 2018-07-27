@@ -48,11 +48,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayDbInfo() {
-        // Accesses the database
-        BookDbHelper mBookDbHelper = new BookDbHelper(this);
-        // Opens the database (or create it if non existent)
-        // and reads from it
-        SQLiteDatabase db = mBookDbHelper.getReadableDatabase();
+
         // "SELECT * FROM books"
         String[] proj = {
                 BookEntry._ID,
@@ -68,14 +64,13 @@ public class MainActivity extends AppCompatActivity {
         };
 
         // Cursor contains all rows and order them by COLUMN_TITLE
-        Cursor cursor = db.query(
-                BookEntry.TABLE_NAME,
+        Cursor cursor = getContentResolver().query(
+                BookEntry.URI_FINAL,
                 proj,
                 null,
                 null,
-                null,
-                null,
-                BookEntry.COLUMN_TITLE);
+                BookEntry.COLUMN_TITLE,
+                null);
 
         TextView tv = findViewById(R.id.text_view_books);
 
