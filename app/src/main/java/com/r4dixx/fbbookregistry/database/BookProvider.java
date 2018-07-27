@@ -7,6 +7,7 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.util.Log;
 
 public class BookProvider extends ContentProvider {
 
@@ -28,10 +29,25 @@ public class BookProvider extends ContentProvider {
     }
 
     // CRUD methods start here (more like IQUD in Android)
-
     @Override
-    public Uri insert(Uri uri, ContentValues contentVals) {
-        return null;
+    public Uri insert(Uri uri, ContentValues vals) {
+        final int matchUri = sUriMatcher.match(uri);
+        switch (matchUri) {
+            case BOOKS_ALL:
+                return insertBook(uri, vals);
+            default:
+                throw new IllegalArgumentException("Unsupported insertion, URI: " + uri);
+        }
+    }
+
+    private Uri insertBook(Uri uri, ContentValues vals) {
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
+        long id = database.insert(BookContract.BookEntry.TABLE_NAME, null, vals);
+        if (id < 0) {
+            Log.e("PetProvider", "Negative ID. New row cannot be inserted for the URI " + uri);
+            return null;
+        }
+        return ContentUris.withAppendedId(uri, id);
     }
 
     @Override
@@ -55,7 +71,7 @@ public class BookProvider extends ContentProvider {
     }
 
     @Override
-    public int update(Uri uri, ContentValues contentVals, String selec, String[] selecArgs) {
+    public int update(Uri uri, ContentValues vals, String selec, String[] selecArgs) {
         return 0;
     }
 

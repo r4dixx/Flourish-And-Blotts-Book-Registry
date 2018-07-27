@@ -3,7 +3,6 @@ package com.r4dixx.fbbookregistry;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
@@ -18,8 +17,6 @@ import com.r4dixx.fbbookregistry.database.BookContract.BookEntry;
 import com.r4dixx.fbbookregistry.database.BookDbHelper;
 
 public class MainActivity extends AppCompatActivity {
-
-    private BookDbHelper mBookDbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +34,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        mBookDbHelper = new BookDbHelper(this);
     }
 
     @Override
@@ -146,8 +141,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void newEntry() {
 
-        SQLiteDatabase db = mBookDbHelper.getWritableDatabase();
-
         ContentValues vals = new ContentValues();
 
         vals.put(BookEntry.COLUMN_TITLE, "Fantastic Beasts and Where to Find Them");
@@ -160,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
         vals.put(BookEntry.COLUMN_SUPPLIER, "Albus Dumbledore");
         vals.put(BookEntry.COLUMN_SUPPLIER_PHONE, "6054756961");
 
-        db.insert(BookEntry.TABLE_NAME, null, vals);
+        getContentResolver().insert(BookEntry.URI_FINAL, vals);
     }
 
     @Override
@@ -173,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
                 displayDbInfo();
                 return true;
             case com.r4dixx.fbbookregistry.R.id.action_delete_data:
-                mBookDbHelper.close();
+                // TODO this feature is now broken (it wasn't implemented correctly anyway
                 this.deleteDatabase(BookDbHelper.DB_NAME);
                 new BookDbHelper(this);
                 displayDbInfo();

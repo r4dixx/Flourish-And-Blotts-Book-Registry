@@ -1,7 +1,7 @@
 package com.r4dixx.fbbookregistry;
 
 import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NavUtils;
@@ -18,7 +18,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.r4dixx.fbbookregistry.database.BookContract.BookEntry;
-import com.r4dixx.fbbookregistry.database.BookDbHelper;
 
 import static com.r4dixx.fbbookregistry.database.BookContract.BookEntry.SUBJECT_UNKNOWN;
 
@@ -49,8 +48,8 @@ public class NewEntryActivity extends AppCompatActivity {
         mYearET = findViewById(R.id.edit_book_year);
         mPriceET = findViewById(R.id.edit_book_price);
         mQuantityET = findViewById(R.id.edit_book_quantity);
-        mSupplierET =findViewById(R.id.edit_book_supplier);
-        mSupplierPhoneET =findViewById(R.id.edit_book_phone);
+        mSupplierET = findViewById(R.id.edit_book_supplier);
+        mSupplierPhoneET = findViewById(R.id.edit_book_phone);
         mSubjectSpin = findViewById(R.id.spinner_subject);
         setSpinner();
     }
@@ -124,9 +123,6 @@ public class NewEntryActivity extends AppCompatActivity {
     }
 
     private void newEntry() {
-        BookDbHelper mBookDbHelper = new BookDbHelper(this);
-        SQLiteDatabase db = mBookDbHelper.getWritableDatabase();
-
         String title = mTitleET.getText().toString().trim();
         String author = mAuthorET.getText().toString().trim();
         String publisher = mPublisherET.getText().toString().trim();
@@ -149,10 +145,12 @@ public class NewEntryActivity extends AppCompatActivity {
         values.put(BookEntry.COLUMN_SUPPLIER, supplier);
         values.put(BookEntry.COLUMN_SUPPLIER_PHONE, phone);
 
-        long newRowId = db.insert(BookEntry.TABLE_NAME, null, values);
+        Uri newUri = getContentResolver().insert(BookEntry.URI_FINAL, values);
 
-        if (newRowId == -1) {
+        if (newUri == null) {
             Toast.makeText(this, "Cannot save book. Something wrong happened", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Book saved" + newUri, Toast.LENGTH_SHORT).show();
         }
     }
 
