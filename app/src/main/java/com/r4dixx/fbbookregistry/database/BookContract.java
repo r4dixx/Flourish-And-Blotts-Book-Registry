@@ -2,9 +2,9 @@ package com.r4dixx.fbbookregistry.database;
 
 import android.provider.BaseColumns;
 
-public final class Contract {
+public final class BookContract {
 
-    private Contract() {
+    private BookContract() {
     }
 
     public static abstract class BookEntry implements BaseColumns {

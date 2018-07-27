@@ -4,18 +4,18 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.r4dixx.fbbookregistry.database.Contract.BookEntry;
+import com.r4dixx.fbbookregistry.database.BookContract.BookEntry;
 
-import static com.r4dixx.fbbookregistry.database.Contract.BookEntry.QUANTITY_DEFAULT;
-import static com.r4dixx.fbbookregistry.database.Contract.BookEntry.SUBJECT_UNKNOWN;
+import static com.r4dixx.fbbookregistry.database.BookContract.BookEntry.QUANTITY_DEFAULT;
+import static com.r4dixx.fbbookregistry.database.BookContract.BookEntry.SUBJECT_UNKNOWN;
 
 
-public class DbHelper extends SQLiteOpenHelper {
+public class BookDbHelper extends SQLiteOpenHelper {
 
     public static final String DB_NAME = "books.db";
     private static final int DB_VERSION = 1;
 
-    public DbHelper(Context context) {
+    public BookDbHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 

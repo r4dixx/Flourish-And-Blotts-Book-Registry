@@ -17,10 +17,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.r4dixx.fbbookregistry.database.Contract.BookEntry;
-import com.r4dixx.fbbookregistry.database.DbHelper;
+import com.r4dixx.fbbookregistry.database.BookContract.BookEntry;
+import com.r4dixx.fbbookregistry.database.BookDbHelper;
 
-import static com.r4dixx.fbbookregistry.database.Contract.BookEntry.SUBJECT_UNKNOWN;
+import static com.r4dixx.fbbookregistry.database.BookContract.BookEntry.SUBJECT_UNKNOWN;
 
 public class NewEntryActivity extends AppCompatActivity {
 
@@ -124,8 +124,8 @@ public class NewEntryActivity extends AppCompatActivity {
     }
 
     private void newEntry() {
-        DbHelper mDbHelper = new DbHelper(this);
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        BookDbHelper mBookDbHelper = new BookDbHelper(this);
+        SQLiteDatabase db = mBookDbHelper.getWritableDatabase();
 
         String title = mTitleET.getText().toString().trim();
         String author = mAuthorET.getText().toString().trim();

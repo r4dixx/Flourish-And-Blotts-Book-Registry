@@ -14,12 +14,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.r4dixx.fbbookregistry.database.Contract.BookEntry;
-import com.r4dixx.fbbookregistry.database.DbHelper;
+import com.r4dixx.fbbookregistry.database.BookContract.BookEntry;
+import com.r4dixx.fbbookregistry.database.BookDbHelper;
 
 public class MainActivity extends AppCompatActivity {
 
-    private DbHelper mDbHelper;
+    private BookDbHelper mBookDbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mDbHelper = new DbHelper(this);
+        mBookDbHelper = new BookDbHelper(this);
     }
 
     @Override
@@ -49,10 +49,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void displayDbInfo() {
         // Accesses the database
-        DbHelper mDbHelper = new DbHelper(this);
+        BookDbHelper mBookDbHelper = new BookDbHelper(this);
         // Opens the database (or create it if non existent)
         // and reads from it
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+        SQLiteDatabase db = mBookDbHelper.getReadableDatabase();
         // "SELECT * FROM books"
         String[] proj = {
                 BookEntry._ID,
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         TextView tv = findViewById(R.id.text_view_books);
 
         // TODO: Modify heavily after being sure the database queries behave correctly in MainActivity. This is just for test and debugging purposes
-        // Displays the header created in Contract.BookEntry
+        // Displays the header created in BookContract.BookEntry
         try {
             tv.setText("The current db table contains: "
                     + cursor.getCount()
@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void newEntry() {
 
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        SQLiteDatabase db = mBookDbHelper.getWritableDatabase();
 
         ContentValues vals = new ContentValues();
 
@@ -178,9 +178,9 @@ public class MainActivity extends AppCompatActivity {
                 displayDbInfo();
                 return true;
             case com.r4dixx.fbbookregistry.R.id.action_delete_data:
-                mDbHelper.close();
-                this.deleteDatabase(DbHelper.DB_NAME);
-                new DbHelper(this);
+                mBookDbHelper.close();
+                this.deleteDatabase(BookDbHelper.DB_NAME);
+                new BookDbHelper(this);
                 displayDbInfo();
                 return true;
         }
