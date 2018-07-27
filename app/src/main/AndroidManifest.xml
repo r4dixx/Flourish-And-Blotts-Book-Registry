@@ -23,7 +23,11 @@
             android:theme="@style/NewEntryTheme"
             android:parentActivityName="com.r4dixx.fbbookregistry.MainActivity" >
         </activity>
-
+        <provider
+            android:name="com.r4dixx.fbbookregistry.database.BookProvider"
+            android:authorities="com.r4dixx.fbbookregistry"
+            android:exported="false">
+        </provider>
     </application>
 
 </manifest>

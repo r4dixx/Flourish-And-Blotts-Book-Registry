@@ -9,7 +9,6 @@ import com.r4dixx.fbbookregistry.database.BookContract.BookEntry;
 import static com.r4dixx.fbbookregistry.database.BookContract.BookEntry.QUANTITY_DEFAULT;
 import static com.r4dixx.fbbookregistry.database.BookContract.BookEntry.SUBJECT_UNKNOWN;
 
-
 public class BookDbHelper extends SQLiteOpenHelper {
 
     public static final String DB_NAME = "books.db";

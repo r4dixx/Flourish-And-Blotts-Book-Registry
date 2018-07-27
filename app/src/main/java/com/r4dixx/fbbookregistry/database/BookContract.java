@@ -1,13 +1,21 @@
 package com.r4dixx.fbbookregistry.database;
 
+import android.net.Uri;
 import android.provider.BaseColumns;
 
 public final class BookContract {
 
     private BookContract() {
+        // Empty constructor to prevent accidental instantiation
     }
 
-    public static abstract class BookEntry implements BaseColumns {
+    public static final String AUTHORITY = "com.r4dixx.fbbookregistry";
+    public static final Uri URI_BASE = Uri.parse("content://" + AUTHORITY);
+    public static final String PATH = "books";
+
+    public static final class BookEntry implements BaseColumns {
+
+        public static final Uri URI_FINAL = Uri.withAppendedPath(URI_BASE, PATH);
 
         public static final String TABLE_NAME = "books";
 
