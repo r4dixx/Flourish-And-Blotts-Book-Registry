@@ -41,8 +41,40 @@ public class BookProvider extends ContentProvider {
     }
 
     private Uri insertBook(Uri uri, ContentValues vals) {
-        SQLiteDatabase database = mDbHelper.getWritableDatabase();
-        long id = database.insert(BookContract.BookEntry.TABLE_NAME, null, vals);
+        // TODO Too much boilerplate code here, this could be simplified (also same code repeated in the update method)
+        String title = vals.getAsString(BookContract.BookEntry.COLUMN_TITLE);
+        if (title == null || title.isEmpty()) {
+            throw new IllegalArgumentException("Title field should be filled");
+        }
+
+        String author = vals.getAsString(BookContract.BookEntry.COLUMN_AUTHOR);
+        if (author == null || author.isEmpty()) {
+            throw new IllegalArgumentException("Author field should be filled");
+        }
+
+        Integer year = vals.getAsInteger(BookContract.BookEntry.COLUMN_YEAR);
+        if (year == null) {
+            throw new IllegalArgumentException("Year field should be filled");
+        }
+
+        Integer price = vals.getAsInteger(BookContract.BookEntry.COLUMN_PRICE);
+        if (price == null) {
+            throw new IllegalArgumentException("Price field should be filled");
+        } else if (price < 0) {
+            throw new IllegalArgumentException("Price is negative!");
+        }
+
+        Integer quantity = vals.getAsInteger(BookContract.BookEntry.COLUMN_QUANTITY);
+        if (quantity == null) {
+            throw new IllegalArgumentException("Price field should be filled");
+        } else if (quantity < 0) {
+            throw new IllegalArgumentException("Quantity is negative!");
+        }
+
+        // No need to check for publisher, subject supplier and supplier phone, they can be null. For the phone number input type takes care of making sure it only contains numbers. Same for the year field. For the subject, the spinner takes care of making sure it only contains valid entries.
+
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        long id = db.insert(BookContract.BookEntry.TABLE_NAME, null, vals);
         if (id < 0) {
             Log.e("PetProvider", "Negative ID. New row cannot be inserted for the URI " + uri);
             return null;
@@ -143,13 +175,31 @@ public class BookProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selec, String[] selecArgs) {
-        return 0;
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        final int matchUri = sUriMatcher.match(uri);
+        if (matchUri == BOOKS_ALL) {
+            return db.delete(BookContract.BookEntry.TABLE_NAME, selec, selecArgs);
+        } else if (matchUri == BOOK_ID) {
+            selec = BookContract.BookEntry._ID + "=?";
+            selecArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
+            return db.delete(BookContract.BookEntry.TABLE_NAME, selec, selecArgs);
+        } else {
+            throw new IllegalArgumentException("Cannot delete Uri " + uri);
+        }
     }
     // End of CRUD methods
 
     // Gets MIME type
     @Override
     public String getType(Uri uri) {
-        return null;
+        final int matchUri = sUriMatcher.match(uri);
+        switch (matchUri) {
+            case BOOKS_ALL:
+                return BookContract.BookEntry.CONTENT_LIST_TYPE;
+            case BOOK_ID:
+                return BookContract.BookEntry.CONTENT_ITEM_TYPE;
+            default:
+                throw new IllegalStateException("URI " + uri + " with match " + matchUri + " is unknown");
+        }
     }
 }
