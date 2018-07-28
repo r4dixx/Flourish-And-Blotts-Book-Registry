@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.r4dixx.fbbookregistry.database.BookContract.BookEntry;
 
+import static com.r4dixx.fbbookregistry.database.BookContract.BookEntry.QUANTITY_DEFAULT;
 import static com.r4dixx.fbbookregistry.database.BookContract.BookEntry.SUBJECT_UNKNOWN;
 
 public class NewEntryActivity extends AppCompatActivity {
@@ -34,6 +35,7 @@ public class NewEntryActivity extends AppCompatActivity {
     private EditText mSupplierPhoneET;
 
     private int mSubject = SUBJECT_UNKNOWN;
+    private int mQuantity = QUANTITY_DEFAULT;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class NewEntryActivity extends AppCompatActivity {
         mYearET = findViewById(R.id.edit_book_year);
         mPriceET = findViewById(R.id.edit_book_price);
         mQuantityET = findViewById(R.id.edit_book_quantity);
+        mQuantityET.setText(String.valueOf(mQuantity));
         mSupplierET = findViewById(R.id.edit_book_supplier);
         mSupplierPhoneET = findViewById(R.id.edit_book_phone);
         mSubjectSpin = findViewById(R.id.spinner_subject);
@@ -126,11 +129,10 @@ public class NewEntryActivity extends AppCompatActivity {
         String title = mTitleET.getText().toString().trim();
         String author = mAuthorET.getText().toString().trim();
         String publisher = mPublisherET.getText().toString().trim();
-        String year = mYearET.getText().toString().trim();
+        String yearString = mYearET.getText().toString().trim();
+        int year = Integer.parseInt(yearString);
         String priceString = mPriceET.getText().toString().trim();
         int price = Integer.parseInt(priceString);
-        String quantityString = mQuantityET.getText().toString().trim();
-        int quantity = Integer.parseInt(quantityString);
         String supplier = mSupplierET.getText().toString().trim();
         String phone = mSupplierPhoneET.getText().toString().trim();
 
@@ -141,12 +143,13 @@ public class NewEntryActivity extends AppCompatActivity {
         values.put(BookEntry.COLUMN_YEAR, year);
         values.put(BookEntry.COLUMN_SUBJECT, mSubject);
         values.put(BookEntry.COLUMN_PRICE, price);
-        values.put(BookEntry.COLUMN_QUANTITY, quantity);
+        values.put(BookEntry.COLUMN_QUANTITY, mQuantity);
         values.put(BookEntry.COLUMN_SUPPLIER, supplier);
         values.put(BookEntry.COLUMN_SUPPLIER_PHONE, phone);
 
         Uri newUri = getContentResolver().insert(BookEntry.URI_FINAL, values);
 
+        // TODO Toasts text should be defined in strings.xml
         if (newUri == null) {
             Toast.makeText(this, "Cannot save book. Something wrong happened", Toast.LENGTH_SHORT).show();
         } else {

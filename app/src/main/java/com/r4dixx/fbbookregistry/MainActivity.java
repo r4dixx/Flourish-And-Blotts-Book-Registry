@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                 String currentTitle = cursor.getString(titleIndex);
                 String currentAuthor = cursor.getString(authorIndex);
                 String currentPublisher = cursor.getString(publisherIndex);
-                String currentYear = cursor.getString(yearIndex);
+                int currentYear = cursor.getInt(yearIndex);
                 int currentSubject = cursor.getInt(subjectIndex);
                 int currentPrice = cursor.getInt(priceIndex);
                 int currentQuantity = cursor.getInt(quantityIndex);
@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         vals.put(BookEntry.COLUMN_PRICE, "2");
         vals.put(BookEntry.COLUMN_QUANTITY, BookEntry.QUANTITY_DEFAULT);
         vals.put(BookEntry.COLUMN_SUPPLIER, "Albus Dumbledore");
-        vals.put(BookEntry.COLUMN_SUPPLIER_PHONE, "6054756961");
+        vals.put(BookEntry.COLUMN_SUPPLIER_PHONE, "605-475-6961");
 
         getContentResolver().insert(BookEntry.URI_FINAL, vals);
     }

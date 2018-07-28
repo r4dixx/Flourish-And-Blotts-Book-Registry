@@ -72,7 +72,73 @@ public class BookProvider extends ContentProvider {
 
     @Override
     public int update(Uri uri, ContentValues vals, String selec, String[] selecArgs) {
-        return 0;
+        final int matchUri = sUriMatcher.match(uri);
+        switch (matchUri) {
+            case BOOKS_ALL:
+                return updateBook(uri, vals, selec, selecArgs);
+            case BOOK_ID:
+                selec = BookContract.BookEntry._ID + "=?";
+                selecArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
+                return updateBook(uri, vals, selec, selecArgs);
+            default:
+                throw new IllegalArgumentException("Cannot update " + uri);
+        }
+    }
+
+    private int updateBook(Uri uri, ContentValues vals, String selec, String[] selecArgs) {
+
+        // TODO Too much boilerplate code here, this could be simplified
+        // Sanity checks start here
+        if (vals.containsKey(BookContract.BookEntry.COLUMN_TITLE)) {
+            String title = vals.getAsString(BookContract.BookEntry.COLUMN_TITLE);
+            if (title == null || title.isEmpty()) {
+                throw new IllegalArgumentException("Title field should be filled");
+            }
+        }
+
+        if (vals.containsKey(BookContract.BookEntry.COLUMN_AUTHOR)) {
+            String author = vals.getAsString(BookContract.BookEntry.COLUMN_AUTHOR);
+            if (author == null || author.isEmpty()) {
+                throw new IllegalArgumentException("Author field should be filled");
+            }
+        }
+
+        if (vals.containsKey(BookContract.BookEntry.COLUMN_YEAR)) {
+            Integer year = vals.getAsInteger(BookContract.BookEntry.COLUMN_YEAR);
+            if (year == null) {
+                throw new IllegalArgumentException("Year field should be filled");
+            }
+        }
+
+        if (vals.containsKey(BookContract.BookEntry.COLUMN_PRICE)) {
+            Integer price = vals.getAsInteger(BookContract.BookEntry.COLUMN_PRICE);
+            if (price == null) {
+                throw new IllegalArgumentException("Price field should be filled");
+            } else if (price < 0) {
+                throw new IllegalArgumentException("Price is negative!");
+            }
+        }
+
+        if (vals.containsKey(BookContract.BookEntry.COLUMN_PRICE)) {
+            Integer quantity = vals.getAsInteger(BookContract.BookEntry.COLUMN_QUANTITY);
+            if (quantity == null) {
+                throw new IllegalArgumentException("Price field should be filled");
+            } else if (quantity < 0) {
+                throw new IllegalArgumentException("Quantity is negative!");
+            }
+        }
+
+        // No need to check for publisher, subject supplier and supplier phone, they can be null. For the phone number input type takes care of making sure it only contains numbers. Same for the year field. For the subject, the spinner takes care of making sure it only contains valid entries.
+
+        // End of sanity checks
+
+        // Update the db only when there's value to update
+        if (vals.size() == 0) {
+            return 0;
+        }
+
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        return db.update(BookContract.BookEntry.TABLE_NAME, vals, selec, selecArgs);
     }
 
     @Override
