@@ -1,8 +1,11 @@
 package com.r4dixx.fbbookregistry;
 
+import android.app.LoaderManager;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,9 +20,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.r4dixx.fbbookregistry.database.BookContract.BookEntry;
-import com.r4dixx.fbbookregistry.database.BookDbHelper;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+
+    private static final int LOADER = 0;
+    BookCursorAdapter mCursAdpt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,44 +42,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        displayDbInfo();
-    }
-
-    private void displayDbInfo() {
-
-        // "SELECT * FROM books"
-        String[] proj = {
-                BookEntry._ID,
-                BookEntry.COLUMN_TITLE,
-                BookEntry.COLUMN_AUTHOR,
-                BookEntry.COLUMN_PUBLISHER,
-                BookEntry.COLUMN_YEAR,
-                BookEntry.COLUMN_SUBJECT,
-                BookEntry.COLUMN_PRICE,
-                BookEntry.COLUMN_QUANTITY,
-                BookEntry.COLUMN_SUPPLIER,
-                BookEntry.COLUMN_SUPPLIER_PHONE
-        };
-
-        // Cursor contains all rows and order them by COLUMN_TITLE
-        Cursor curs = getContentResolver().query(
-                BookEntry.URI_FINAL,
-                proj,
-                null,
-                null,
-                BookEntry.COLUMN_TITLE,
-                null);
 
         ListView lv = findViewById(R.id.list);
         View emptyView = findViewById(R.id.empty_view);
         lv.setEmptyView(emptyView);
-        BookCursorAdapter adpt = new BookCursorAdapter(this, curs);
-        lv.setAdapter(adpt);
+
+        mCursAdpt = new BookCursorAdapter(this, null);
+        lv.setAdapter(mCursAdpt);
+
+        getLoaderManager().initLoader(LOADER, null, this);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -118,16 +94,47 @@ public class MainActivity extends AppCompatActivity {
         switch (id) {
             case com.r4dixx.fbbookregistry.R.id.action_insert_dummy_data:
                 newEntry();
-                displayDbInfo();
                 return true;
             case com.r4dixx.fbbookregistry.R.id.action_delete_data:
                 // TODO this feature is now broken (it wasn't implemented correctly anyway
-                this.deleteDatabase(BookDbHelper.DB_NAME);
-                new BookDbHelper(this);
-                displayDbInfo();
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        // "SELECT * FROM books"
+        String[] proj = {
+                BookEntry._ID,
+                BookEntry.COLUMN_TITLE,
+                BookEntry.COLUMN_AUTHOR,
+                BookEntry.COLUMN_PUBLISHER,
+                BookEntry.COLUMN_YEAR,
+                BookEntry.COLUMN_SUBJECT,
+                BookEntry.COLUMN_PRICE,
+                BookEntry.COLUMN_QUANTITY,
+                BookEntry.COLUMN_SUPPLIER,
+                BookEntry.COLUMN_SUPPLIER_PHONE
+        };
+
+        // Cursor contains all rows and order them by COLUMN_TITLE
+        return new CursorLoader(this,
+                BookEntry.URI_FINAL,
+                proj,
+                null,
+                null,
+                BookEntry._ID + " DESC");
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor curs) {
+        mCursAdpt.swapCursor(curs);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mCursAdpt.swapCursor(null);
     }
 }

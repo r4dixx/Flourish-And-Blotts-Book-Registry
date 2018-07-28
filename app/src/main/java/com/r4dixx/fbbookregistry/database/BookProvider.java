@@ -79,6 +79,7 @@ public class BookProvider extends ContentProvider {
             Log.e("PetProvider", "Negative ID. New row cannot be inserted for the URI " + uri);
             return null;
         }
+        getContext().getContentResolver().notifyChange(uri, null);
         return ContentUris.withAppendedId(uri, id);
     }
 
@@ -99,6 +100,7 @@ public class BookProvider extends ContentProvider {
             default:
                 throw new IllegalArgumentException("Cannot query: " + uri + ". Unknown URI");
         }
+        curs.setNotificationUri(getContext().getContentResolver(), uri);
         return curs;
     }
 
@@ -170,22 +172,32 @@ public class BookProvider extends ContentProvider {
         }
 
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        return db.update(BookContract.BookEntry.TABLE_NAME, vals, selec, selecArgs);
+        int updated = db.update(BookContract.BookEntry.TABLE_NAME, vals, selec, selecArgs);
+        if (updated != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return updated;
     }
 
     @Override
     public int delete(Uri uri, String selec, String[] selecArgs) {
+        int deleted;
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         final int matchUri = sUriMatcher.match(uri);
         if (matchUri == BOOKS_ALL) {
-            return db.delete(BookContract.BookEntry.TABLE_NAME, selec, selecArgs);
+            deleted = db.delete(BookContract.BookEntry.TABLE_NAME, selec, selecArgs);
         } else if (matchUri == BOOK_ID) {
             selec = BookContract.BookEntry._ID + "=?";
             selecArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
-            return db.delete(BookContract.BookEntry.TABLE_NAME, selec, selecArgs);
+            deleted = db.delete(BookContract.BookEntry.TABLE_NAME, selec, selecArgs);
         } else {
             throw new IllegalArgumentException("Cannot delete Uri " + uri);
         }
+
+        if (deleted != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return deleted;
     }
     // End of CRUD methods
 
