@@ -71,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
                 null);
 
         ListView lv = findViewById(R.id.list);
+        View emptyView = findViewById(R.id.empty_view);
+        lv.setEmptyView(emptyView);
         BookCursorAdapter adpt = new BookCursorAdapter(this, curs);
         lv.setAdapter(adpt);
 
