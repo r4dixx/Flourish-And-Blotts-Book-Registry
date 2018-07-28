@@ -1,6 +1,7 @@
 package com.r4dixx.fbbookregistry;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -36,13 +37,24 @@ public class NewEntryActivity extends AppCompatActivity {
 
     private int mSubject = SUBJECT_UNKNOWN;
     private int mQuantity = QUANTITY_DEFAULT;
+    private Uri mCurrentBook;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_entry);
+
         Toolbar toolbar = findViewById(R.id.toolbar_new_entry);
         setSupportActionBar(toolbar);
+
+        Intent intent = getIntent();
+        mCurrentBook = intent.getData();
+
+        if (mCurrentBook != null) {
+            setTitle(getString(R.string.new_entry_activity_edit));
+        } else {
+            setTitle(getString(R.string.new_entry_activity_add));
+        }
 
         mTitleET = findViewById(R.id.edit_book_title);
         mAuthorET = findViewById(R.id.edit_book_author);

@@ -2,7 +2,8 @@
     <!-- App and activity names-->
     <string name="app_name">F&amp;B - Book Registry</string>
     <string name="main_activity_name">F&amp;B - Book Registry</string>
-    <string name="new_entry_activity_name">Register a new book</string>
+    <string name="new_entry_activity_add">Register a new book</string>
+    <string name="new_entry_activity_edit">Edit book information</string>
 
     <!-- Menu entry labels-->
     <string name="action_insert_dummy_data">Actio, dummy book!</string>

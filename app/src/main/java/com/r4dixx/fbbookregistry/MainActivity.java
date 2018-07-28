@@ -1,8 +1,10 @@
 package com.r4dixx.fbbookregistry;
 
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
@@ -11,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.r4dixx.fbbookregistry.database.BookContract.BookEntry;
@@ -70,6 +73,17 @@ public class MainActivity extends AppCompatActivity {
         ListView lv = findViewById(R.id.list);
         BookCursorAdapter adpt = new BookCursorAdapter(this, curs);
         lv.setAdapter(adpt);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adptV, View v, int pos, long id) {
+                Intent intent = new Intent(MainActivity.this, NewEntryActivity.class);
+                Uri currentPetUri = ContentUris.withAppendedId(BookEntry.URI_FINAL, id);
+                intent.setData(currentPetUri);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void newEntry() {

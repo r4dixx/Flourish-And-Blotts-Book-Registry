@@ -19,7 +19,6 @@
         </activity>
         <activity
             android:name="com.r4dixx.fbbookregistry.NewEntryActivity"
-            android:label="@string/new_entry_activity_name"
             android:theme="@style/NewEntryTheme"
             android:parentActivityName="com.r4dixx.fbbookregistry.MainActivity" >
         </activity>
