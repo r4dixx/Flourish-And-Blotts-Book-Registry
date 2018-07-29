@@ -1,7 +1,11 @@
 package com.r4dixx.fbbookregistry;
 
+import android.app.LoaderManager;
 import android.content.ContentValues;
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.Loader;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,7 +27,10 @@ import com.r4dixx.fbbookregistry.database.BookContract.BookEntry;
 import static com.r4dixx.fbbookregistry.database.BookContract.BookEntry.QUANTITY_DEFAULT;
 import static com.r4dixx.fbbookregistry.database.BookContract.BookEntry.SUBJECT_UNKNOWN;
 
-public class NewEntryActivity extends AppCompatActivity {
+public class NewEntryActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+
+    private static final int LOADER = 0;
+    private Uri mCurrentBookUri;
 
     private EditText mTitleET;
     private EditText mAuthorET;
@@ -37,7 +44,6 @@ public class NewEntryActivity extends AppCompatActivity {
 
     private int mSubject = SUBJECT_UNKNOWN;
     private int mQuantity = QUANTITY_DEFAULT;
-    private Uri mCurrentBook;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,10 +54,11 @@ public class NewEntryActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
-        mCurrentBook = intent.getData();
+        mCurrentBookUri = intent.getData();
 
-        if (mCurrentBook != null) {
+        if (mCurrentBookUri != null) {
             setTitle(getString(R.string.new_entry_activity_edit));
+            getLoaderManager().initLoader(LOADER, null, this);
         } else {
             setTitle(getString(R.string.new_entry_activity_add));
         }
@@ -191,4 +198,145 @@ public class NewEntryActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        String[] projection = {
+                BookEntry.COLUMN_TITLE,
+                BookEntry.COLUMN_AUTHOR,
+                BookEntry.COLUMN_PUBLISHER,
+                BookEntry.COLUMN_YEAR,
+                BookEntry.COLUMN_SUBJECT,
+                BookEntry.COLUMN_PRICE,
+                BookEntry.COLUMN_QUANTITY,
+                BookEntry.COLUMN_SUPPLIER,
+                BookEntry.COLUMN_SUPPLIER_PHONE};
+
+        return new CursorLoader(this,
+                mCurrentBookUri,
+                projection,
+                null,
+                null,
+                null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor curs) {
+        if (curs == null || curs.getCount() < 1) {
+            return;
+        }
+
+        if (curs.moveToFirst()) {
+            // Find the columns of pet attributes that we're interested in
+            int titleColIndex = curs.getColumnIndex(BookEntry.COLUMN_TITLE);
+            int authorColIndex = curs.getColumnIndex(BookEntry.COLUMN_AUTHOR);
+            int publisherColIndex = curs.getColumnIndex(BookEntry.COLUMN_PUBLISHER);
+            int yearColIndex = curs.getColumnIndex(BookEntry.COLUMN_YEAR);
+            int subjectColIndex = curs.getColumnIndex(BookEntry.COLUMN_SUBJECT);
+            int priceColIndex = curs.getColumnIndex(BookEntry.COLUMN_PRICE);
+            int quantityColIndex = curs.getColumnIndex(BookEntry.COLUMN_QUANTITY);
+            int supplierColIndex = curs.getColumnIndex(BookEntry.COLUMN_SUPPLIER);
+            int phoneColIndex = curs.getColumnIndex(BookEntry.COLUMN_SUPPLIER_PHONE);
+
+            String title = curs.getString(titleColIndex);
+            String author = curs.getString(authorColIndex);
+            String publisher = curs.getString(publisherColIndex);
+            int year = curs.getInt(yearColIndex);
+            int subject = curs.getInt(subjectColIndex);
+            int price = curs.getInt(priceColIndex);
+            int quantity = curs.getInt(quantityColIndex);
+            String supplier = curs.getString(supplierColIndex);
+            String phone = curs.getString(phoneColIndex);
+
+            mTitleET.setText(title);
+            mAuthorET.setText(author);
+            mPublisherET.setText(publisher);
+            mYearET.setText(Integer.toString(year));
+            mPriceET.setText(Integer.toString(price));
+            mQuantityET.setText(Integer.toString(quantity));
+            mSupplierET.setText(supplier);
+            mSupplierPhoneET.setText(phone);
+
+            switch (subject) {
+                case BookEntry.SUBJECT_ALCHEMY:
+                    mSubjectSpin.setSelection(1);
+                    break;
+                case BookEntry.SUBJECT_ANCIENT_RUNES:
+                    mSubjectSpin.setSelection(19);
+                    break;
+                case BookEntry.SUBJECT_ANCIENT_STUDIES:
+                    mSubjectSpin.setSelection(2);
+                    break;
+                case BookEntry.SUBJECT_APPARITION:
+                    mSubjectSpin.setSelection(3);
+                    break;
+                case BookEntry.SUBJECT_ARITHMANCY:
+                    mSubjectSpin.setSelection(4);
+                    break;
+                case BookEntry.SUBJECT_ART:
+                    mSubjectSpin.setSelection(5);
+                    break;
+                case BookEntry.SUBJECT_ASTRONOMY:
+                    mSubjectSpin.setSelection(6);
+                    break;
+                case BookEntry.SUBJECT_CHARMS:
+                    mSubjectSpin.setSelection(7);
+                    break;
+                case BookEntry.SUBJECT_CREATURES:
+                    mSubjectSpin.setSelection(8);
+                    break;
+                case BookEntry.SUBJECT_DARK_ARTS:
+                    mSubjectSpin.setSelection(9);
+                    break;
+                case BookEntry.SUBJECT_DIVINATION:
+                    mSubjectSpin.setSelection(10);
+                    break;
+                case BookEntry.SUBJECT_FLYING:
+                    mSubjectSpin.setSelection(11);
+                    break;
+                case BookEntry.SUBJECT_HERBOLOGY:
+                    mSubjectSpin.setSelection(12);
+                    break;
+                case BookEntry.SUBJECT_MAGIC_HISTORY:
+                    mSubjectSpin.setSelection(13);
+                    break;
+                case BookEntry.SUBJECT_MAGICAL_THEORY:
+                    mSubjectSpin.setSelection(14);
+                    break;
+                case BookEntry.SUBJECT_MUGGLES_STUDY:
+                    mSubjectSpin.setSelection(15);
+                    break;
+                case BookEntry.SUBJECT_MUGGLE_ART:
+                    mSubjectSpin.setSelection(16);
+                    break;
+                case BookEntry.SUBJECT_MUSIC:
+                    mSubjectSpin.setSelection(17);
+                    break;
+                case BookEntry.SUBJECT_POTIONS:
+                    mSubjectSpin.setSelection(18);
+                    break;
+                case BookEntry.SUBJECT_TRANFIGURATION:
+                    mSubjectSpin.setSelection(20);
+                    break;
+                case BookEntry.SUBJECT_XYLOMANCY:
+                    mSubjectSpin.setSelection(21);
+                    break;
+                default:
+                    mSubjectSpin.setSelection(0);
+                    break;
+            }
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mTitleET.getText().clear();
+        mAuthorET.getText().clear();
+        mPublisherET.getText().clear();
+        mYearET.getText().clear();
+        mPriceET.getText().clear();
+        mQuantityET.getText().clear();
+        mSupplierET.getText().clear();
+        mSupplierPhoneET.getText().clear();
+        mSubjectSpin.setSelection(0);
+    }
 }

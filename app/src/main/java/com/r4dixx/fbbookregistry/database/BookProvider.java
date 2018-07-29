@@ -181,8 +181,8 @@ public class BookProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selec, String[] selecArgs) {
-        int deleted;
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        int deleted;
         final int matchUri = sUriMatcher.match(uri);
         if (matchUri == BOOKS_ALL) {
             deleted = db.delete(BookContract.BookEntry.TABLE_NAME, selec, selecArgs);

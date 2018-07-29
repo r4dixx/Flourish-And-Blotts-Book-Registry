@@ -110,13 +110,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 BookEntry._ID,
                 BookEntry.COLUMN_TITLE,
                 BookEntry.COLUMN_AUTHOR,
-                BookEntry.COLUMN_PUBLISHER,
                 BookEntry.COLUMN_YEAR,
-                BookEntry.COLUMN_SUBJECT,
                 BookEntry.COLUMN_PRICE,
                 BookEntry.COLUMN_QUANTITY,
-                BookEntry.COLUMN_SUPPLIER,
-                BookEntry.COLUMN_SUPPLIER_PHONE
         };
 
         // Cursor contains all rows and order them by COLUMN_TITLE
