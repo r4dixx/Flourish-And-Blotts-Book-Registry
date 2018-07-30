@@ -292,7 +292,6 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
                     Toast.makeText(this, getString(R.string.toast_edit_missing_field), Toast.LENGTH_LONG).show();
                     return false;
                 }
-                //TODO same thing as above for year, price and quantity fields (got to figure out how to do it for integers)
                 newEntry();
                 finish();
                 return true;
@@ -408,6 +407,7 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
             int year = curs.getInt(yearColIndex);
             int subject = curs.getInt(subjectColIndex);
             int price = curs.getInt(priceColIndex);
+            int quantity = curs.getInt(quantityColIndex);
             String supplier = curs.getString(supplierColIndex);
             String phone = curs.getString(phoneColIndex);
 
@@ -416,6 +416,7 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
             mPublisherET.setText(publisher);
             mYearET.setText(String.valueOf(year));
             mPriceET.setText(String.valueOf(price));
+            mQuantityET.setText(String.valueOf(quantity));
             mSupplierET.setText(supplier);
             mSupplierPhoneET.setText(phone);
 
