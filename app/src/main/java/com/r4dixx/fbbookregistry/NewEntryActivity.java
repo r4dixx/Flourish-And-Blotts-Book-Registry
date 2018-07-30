@@ -164,25 +164,6 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
         values.put(BookEntry.COLUMN_SUPPLIER, supplier);
         values.put(BookEntry.COLUMN_SUPPLIER_PHONE, phone);
 
-        // Do not parse if not provided by the user
-        int quantity = 0;
-        if (!TextUtils.isEmpty(quantityString)) {
-            quantity = Integer.parseInt(quantityString);
-        }
-        values.put(BookEntry.COLUMN_QUANTITY, quantity);
-
-        int year = 0;
-        if (!TextUtils.isEmpty(yearString)) {
-            year = Integer.parseInt(yearString);
-        }
-        values.put(BookEntry.COLUMN_YEAR, year);
-
-        int price = 0;
-        if (!TextUtils.isEmpty(priceString)) {
-            price = Integer.parseInt(priceString);
-        }
-        values.put(BookEntry.COLUMN_PRICE, price);
-
         // Determine if this is a new or existing book
         if (mCurrentBookUri != null) {
             int rowsChanged = getContentResolver().update(mCurrentBookUri, values, null, null);
