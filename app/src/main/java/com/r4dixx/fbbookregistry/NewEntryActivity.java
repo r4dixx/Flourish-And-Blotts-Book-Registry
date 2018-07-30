@@ -146,8 +146,11 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
         String author = mAuthorET.getText().toString().trim();
         String publisher = mPublisherET.getText().toString().trim();
         String yearString = mYearET.getText().toString().trim();
+        int year = Integer.parseInt(yearString);
         String priceString = mPriceET.getText().toString().trim();
+        int price = Integer.parseInt(priceString);
         String quantityString = mQuantityET.getText().toString().trim();
+        int quantity = Integer.parseInt(quantityString);
         String supplier = mSupplierET.getText().toString().trim();
         String phone = mSupplierPhoneET.getText().toString().trim();
 
@@ -160,7 +163,10 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
         values.put(BookEntry.COLUMN_TITLE, title);
         values.put(BookEntry.COLUMN_AUTHOR, author);
         values.put(BookEntry.COLUMN_PUBLISHER, publisher);
+        values.put(BookEntry.COLUMN_YEAR, year);
         values.put(BookEntry.COLUMN_SUBJECT, mSubject);
+        values.put(BookEntry.COLUMN_PRICE, price);
+        values.put(BookEntry.COLUMN_QUANTITY, quantity);
         values.put(BookEntry.COLUMN_SUPPLIER, supplier);
         values.put(BookEntry.COLUMN_SUPPLIER_PHONE, phone);
 
