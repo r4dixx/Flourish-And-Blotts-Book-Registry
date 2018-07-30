@@ -248,6 +248,12 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save:
+                // If these fields are empty, stay here
+                if (TextUtils.isEmpty(mTitleET.getText()) || TextUtils.isEmpty(mAuthorET.getText()) || TextUtils.isEmpty(mYearET.getText()) || TextUtils.isEmpty(mPriceET.getText()) || TextUtils.isEmpty(mQuantityET.getText())) {
+                    Toast.makeText(this, getString(R.string.toast_edit_missing_field), Toast.LENGTH_LONG).show();
+                    return false;
+                }
+                //TODO same thing as above for year, price and quantity fields (got to figure out how to do it for integers)
                 newEntry();
                 finish();
                 return true;
@@ -370,9 +376,9 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
             mTitleET.setText(title);
             mAuthorET.setText(author);
             mPublisherET.setText(publisher);
-            mYearET.setText(Integer.toString(year));
-            mPriceET.setText(Integer.toString(price));
-            mQuantityET.setText(Integer.toString(quantity));
+            mYearET.setText(String.valueOf(year));
+            mPriceET.setText(String.valueOf(price));
+            mQuantityET.setText(String.valueOf(quantity));
             mSupplierET.setText(supplier);
             mSupplierPhoneET.setText(phone);
 
