@@ -24,7 +24,6 @@ import android.widget.Toast;
 
 import com.r4dixx.fbbookregistry.database.BookContract.BookEntry;
 
-import static com.r4dixx.fbbookregistry.database.BookContract.BookEntry.QUANTITY_DEFAULT;
 import static com.r4dixx.fbbookregistry.database.BookContract.BookEntry.SUBJECT_UNKNOWN;
 
 public class NewEntryActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -36,14 +35,13 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
     private EditText mAuthorET;
     private EditText mPublisherET;
     private EditText mYearET;
-    private Spinner mSubjectSpin;
     private EditText mPriceET;
     private EditText mQuantityET;
     private EditText mSupplierET;
     private EditText mSupplierPhoneET;
 
+    private Spinner mSubjectSpin;
     private int mSubject = SUBJECT_UNKNOWN;
-    private int mQuantity = QUANTITY_DEFAULT;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,7 +67,6 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
         mYearET = findViewById(R.id.edit_book_year);
         mPriceET = findViewById(R.id.edit_book_price);
         mQuantityET = findViewById(R.id.edit_book_quantity);
-        mQuantityET.setText(String.valueOf(mQuantity));
         mSupplierET = findViewById(R.id.edit_book_supplier);
         mSupplierPhoneET = findViewById(R.id.edit_book_phone);
         mSubjectSpin = findViewById(R.id.spinner_subject);
@@ -84,8 +81,8 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
 
         mSubjectSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selected = (String) parent.getItemAtPosition(position);
+            public void onItemSelected(AdapterView<?> par, View v, int pos, long id) {
+                String selected = (String) par.getItemAtPosition(pos);
 
                 // TODO this could be a looot cleaner. With a switch maybe or even better a loop
                 if (!TextUtils.isEmpty(selected)) {
@@ -149,30 +146,59 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
         String author = mAuthorET.getText().toString().trim();
         String publisher = mPublisherET.getText().toString().trim();
         String yearString = mYearET.getText().toString().trim();
-        int year = Integer.parseInt(yearString);
         String priceString = mPriceET.getText().toString().trim();
-        int price = Integer.parseInt(priceString);
+        String quantityString = mQuantityET.getText().toString().trim();
         String supplier = mSupplierET.getText().toString().trim();
         String phone = mSupplierPhoneET.getText().toString().trim();
+
+        // If no field was modified, do nothing
+        if (mCurrentBookUri == null && TextUtils.isEmpty(title) && TextUtils.isEmpty(author) && TextUtils.isEmpty(publisher) && TextUtils.isEmpty(yearString) && TextUtils.isEmpty(priceString) && TextUtils.isEmpty(supplier) && TextUtils.isEmpty(supplier) && TextUtils.isEmpty(phone) && mSubject == SUBJECT_UNKNOWN) {
+            return;
+        }
 
         ContentValues values = new ContentValues();
         values.put(BookEntry.COLUMN_TITLE, title);
         values.put(BookEntry.COLUMN_AUTHOR, author);
         values.put(BookEntry.COLUMN_PUBLISHER, publisher);
-        values.put(BookEntry.COLUMN_YEAR, year);
         values.put(BookEntry.COLUMN_SUBJECT, mSubject);
-        values.put(BookEntry.COLUMN_PRICE, price);
-        values.put(BookEntry.COLUMN_QUANTITY, mQuantity);
         values.put(BookEntry.COLUMN_SUPPLIER, supplier);
         values.put(BookEntry.COLUMN_SUPPLIER_PHONE, phone);
 
-        Uri newUri = getContentResolver().insert(BookEntry.URI_FINAL, values);
+        // Do not parse if not provided by the user
+        int quantity = 0;
+        if (!TextUtils.isEmpty(quantityString)) {
+            quantity = Integer.parseInt(quantityString);
+        }
+        values.put(BookEntry.COLUMN_QUANTITY, quantity);
 
-        // TODO Toasts text should be defined in strings.xml
-        if (newUri == null) {
-            Toast.makeText(this, "Cannot save book. Something wrong happened", Toast.LENGTH_SHORT).show();
+        int year = 0;
+        if (!TextUtils.isEmpty(yearString)) {
+            year = Integer.parseInt(yearString);
+        }
+        values.put(BookEntry.COLUMN_YEAR, year);
+
+        int price = 0;
+        if (!TextUtils.isEmpty(priceString)) {
+            price = Integer.parseInt(priceString);
+        }
+        values.put(BookEntry.COLUMN_PRICE, price);
+
+        // Determine if this is a new or existing book
+        if (mCurrentBookUri != null) {
+            int rowsChanged = getContentResolver().update(mCurrentBookUri, values, null, null);
+            if (rowsChanged > 0) {
+                Toast.makeText(this, getString(R.string.toast_edit_successful), Toast.LENGTH_SHORT).show();
+            } else {
+                // no rows affected means an error happened during the update
+                Toast.makeText(this, getString(R.string.toast_edit_failed), Toast.LENGTH_SHORT).show();
+            }
         } else {
-            Toast.makeText(this, "Book saved" + newUri, Toast.LENGTH_SHORT).show();
+            Uri newUri = getContentResolver().insert(BookEntry.URI_FINAL, values);
+            if (newUri != null) {
+                Toast.makeText(this, getString(R.string.toast_new_successful), Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, getString(R.string.toast_new_failed), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -260,59 +286,59 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
                 case BookEntry.SUBJECT_ALCHEMY:
                     mSubjectSpin.setSelection(1);
                     break;
-                case BookEntry.SUBJECT_ANCIENT_RUNES:
-                    mSubjectSpin.setSelection(19);
-                    break;
                 case BookEntry.SUBJECT_ANCIENT_STUDIES:
                     mSubjectSpin.setSelection(2);
                     break;
-                case BookEntry.SUBJECT_APPARITION:
+                case BookEntry.SUBJECT_ANCIENT_RUNES:
                     mSubjectSpin.setSelection(3);
                     break;
-                case BookEntry.SUBJECT_ARITHMANCY:
+                case BookEntry.SUBJECT_APPARITION:
                     mSubjectSpin.setSelection(4);
                     break;
-                case BookEntry.SUBJECT_ART:
+                case BookEntry.SUBJECT_ARITHMANCY:
                     mSubjectSpin.setSelection(5);
                     break;
-                case BookEntry.SUBJECT_ASTRONOMY:
+                case BookEntry.SUBJECT_ART:
                     mSubjectSpin.setSelection(6);
                     break;
-                case BookEntry.SUBJECT_CHARMS:
+                case BookEntry.SUBJECT_ASTRONOMY:
                     mSubjectSpin.setSelection(7);
                     break;
-                case BookEntry.SUBJECT_CREATURES:
+                case BookEntry.SUBJECT_CHARMS:
                     mSubjectSpin.setSelection(8);
                     break;
-                case BookEntry.SUBJECT_DARK_ARTS:
+                case BookEntry.SUBJECT_CREATURES:
                     mSubjectSpin.setSelection(9);
                     break;
-                case BookEntry.SUBJECT_DIVINATION:
+                case BookEntry.SUBJECT_DARK_ARTS:
                     mSubjectSpin.setSelection(10);
                     break;
-                case BookEntry.SUBJECT_FLYING:
+                case BookEntry.SUBJECT_DIVINATION:
                     mSubjectSpin.setSelection(11);
                     break;
-                case BookEntry.SUBJECT_HERBOLOGY:
+                case BookEntry.SUBJECT_FLYING:
                     mSubjectSpin.setSelection(12);
                     break;
-                case BookEntry.SUBJECT_MAGIC_HISTORY:
+                case BookEntry.SUBJECT_HERBOLOGY:
                     mSubjectSpin.setSelection(13);
                     break;
-                case BookEntry.SUBJECT_MAGICAL_THEORY:
+                case BookEntry.SUBJECT_MAGIC_HISTORY:
                     mSubjectSpin.setSelection(14);
                     break;
-                case BookEntry.SUBJECT_MUGGLES_STUDY:
+                case BookEntry.SUBJECT_MAGICAL_THEORY:
                     mSubjectSpin.setSelection(15);
                     break;
-                case BookEntry.SUBJECT_MUGGLE_ART:
+                case BookEntry.SUBJECT_MUGGLES_STUDY:
                     mSubjectSpin.setSelection(16);
                     break;
-                case BookEntry.SUBJECT_MUSIC:
+                case BookEntry.SUBJECT_MUGGLE_ART:
                     mSubjectSpin.setSelection(17);
                     break;
-                case BookEntry.SUBJECT_POTIONS:
+                case BookEntry.SUBJECT_MUSIC:
                     mSubjectSpin.setSelection(18);
+                    break;
+                case BookEntry.SUBJECT_POTIONS:
+                    mSubjectSpin.setSelection(19);
                     break;
                 case BookEntry.SUBJECT_TRANFIGURATION:
                     mSubjectSpin.setSelection(20);

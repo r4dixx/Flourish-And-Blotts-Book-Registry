@@ -20,6 +20,11 @@
     <string name="hint_quantity">Quantity</string>
     <string name="hint_supplier">Supplier (leave blank if not applicable)</string>
     <string name="hint_phone">Supplier phone (leave blank if not applicable)</string>
+    <!-- Toasts -->
+    <string name="toast_new_successful">Book saved</string>
+    <string name="toast_new_failed">Cannot save book</string>
+    <string name="toast_edit_successful">Changes saved in the database</string>
+    <string name="toast_edit_failed">Changes could not be saved</string>
 
 
     <!-- New entry - Spinner - subjects -->
