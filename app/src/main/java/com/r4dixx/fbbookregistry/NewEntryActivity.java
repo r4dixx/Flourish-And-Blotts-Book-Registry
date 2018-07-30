@@ -3,6 +3,7 @@ package com.r4dixx.fbbookregistry;
 import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -10,11 +11,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -42,6 +45,15 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
 
     private Spinner mSubjectSpin;
     private int mSubject = SUBJECT_UNKNOWN;
+    private boolean mBookChanged = false;
+
+    private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            mBookChanged = true;
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,6 +83,17 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
         mSupplierET = findViewById(R.id.edit_book_supplier);
         mSupplierPhoneET = findViewById(R.id.edit_book_phone);
         mSubjectSpin = findViewById(R.id.spinner_subject);
+
+        mTitleET.setOnTouchListener(mTouchListener);
+        mAuthorET.setOnTouchListener(mTouchListener);
+        mPublisherET.setOnTouchListener(mTouchListener);
+        mYearET.setOnTouchListener(mTouchListener);
+        mPriceET.setOnTouchListener(mTouchListener);
+        mQuantityET.setOnTouchListener(mTouchListener);
+        mSupplierET.setOnTouchListener(mTouchListener);
+        mSupplierPhoneET.setOnTouchListener(mTouchListener);
+        mSubjectSpin.setOnTouchListener(mTouchListener);
+
         setSpinner();
     }
 
@@ -207,21 +230,63 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
     }
 
     @Override
+    public void onBackPressed() {
+        if (!mBookChanged) {
+            super.onBackPressed();
+            return;
+        }
+        DialogInterface.OnClickListener discardButtonClickListener =
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                };
+        exitEditionDialog(discardButtonClickListener);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // User clicked on a menu option in the app bar overflow menu
         switch (item.getItemId()) {
-            // Respond to a click on the "Save" menu option
             case R.id.action_save:
                 newEntry();
                 finish();
                 return true;
             case R.id.action_delete:
                 return true;
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
+            case R.id.home:
+                if (!mBookChanged) {
+                    NavUtils.navigateUpFromSameTask(this);
+                    Toast.makeText(this, getString(R.string.toast_edit_no_changes), Toast.LENGTH_SHORT).show();
+
+                    DialogInterface.OnClickListener discardButtonClickListener =
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    NavUtils.navigateUpFromSameTask(NewEntryActivity.this);
+                                }
+                            };
+                    exitEditionDialog(discardButtonClickListener);
+                    return true;
+                }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void exitEditionDialog(
+            DialogInterface.OnClickListener discardButtonClickListener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.dialog_unsaved_changes);
+        builder.setPositiveButton(R.string.dialog_discard_changes, discardButtonClickListener);
+        builder.setNegativeButton(R.string.dialog_keep_editing, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     @Override

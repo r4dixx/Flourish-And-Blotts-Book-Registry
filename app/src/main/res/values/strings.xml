@@ -26,7 +26,11 @@
     <string name="toast_new_failed">Cannot save book</string>
     <string name="toast_edit_successful">Changes saved in the database</string>
     <string name="toast_edit_failed">Changes could not be saved</string>
-
+    <string name="toast_edit_no_changes">No changes</string>
+    <!--Dialogs-->
+    <string name="dialog_unsaved_changes">Discard changes?</string>
+    <string name="dialog_discard_changes">Yes</string>
+    <string name="dialog_keep_editing">No, keep editing</string>
 
     <!-- New entry - Spinner - subjects -->
     <string name="subject_unknown">Unclassifiable</string>
@@ -51,6 +55,4 @@
     <string name="subject_potions">Potions</string>
     <string name="subject_transfiguration">Transfiguration</string>
     <string name="subject_xylomancy">Xylomancy</string>
-
-
 </resources>
