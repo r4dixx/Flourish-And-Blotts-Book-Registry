@@ -235,13 +235,12 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
             super.onBackPressed();
             return;
         }
-        DialogInterface.OnClickListener discardButtonClickListener =
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();
-                    }
-                };
+        DialogInterface.OnClickListener discardButtonClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        };
         exitEditionDialog(discardButtonClickListener);
     }
 
@@ -253,19 +252,18 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
                 finish();
                 return true;
             case R.id.action_delete:
+                confirmDeletionDialog();
                 return true;
             case R.id.home:
                 if (!mBookChanged) {
                     NavUtils.navigateUpFromSameTask(this);
                     Toast.makeText(this, getString(R.string.toast_edit_no_changes), Toast.LENGTH_SHORT).show();
-
-                    DialogInterface.OnClickListener discardButtonClickListener =
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    NavUtils.navigateUpFromSameTask(NewEntryActivity.this);
-                                }
-                            };
+                    DialogInterface.OnClickListener discardButtonClickListener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            NavUtils.navigateUpFromSameTask(NewEntryActivity.this);
+                        }
+                    };
                     exitEditionDialog(discardButtonClickListener);
                     return true;
                 }
@@ -273,20 +271,51 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
         return super.onOptionsItemSelected(item);
     }
 
-    private void exitEditionDialog(
-            DialogInterface.OnClickListener discardButtonClickListener) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(R.string.dialog_unsaved_changes);
-        builder.setPositiveButton(R.string.dialog_discard_changes, discardButtonClickListener);
-        builder.setNegativeButton(R.string.dialog_keep_editing, new DialogInterface.OnClickListener() {
+    //DIALOGS
+    private void exitEditionDialog(DialogInterface.OnClickListener discardButtonClickListener) {
+        AlertDialog.Builder bldr = new AlertDialog.Builder(this);
+        bldr.setMessage(R.string.dialog_unsaved);
+        bldr.setPositiveButton(R.string.dialog_unsaved_pos, discardButtonClickListener);
+        bldr.setNegativeButton(R.string.dialog_unsaved_neg, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 if (dialog != null) {
                     dialog.dismiss();
                 }
             }
         });
-        AlertDialog alertDialog = builder.create();
+        AlertDialog alertDialog = bldr.create();
         alertDialog.show();
+    }
+
+    private void confirmDeletionDialog() {
+        AlertDialog.Builder bldr = new AlertDialog.Builder(this);
+        bldr.setMessage(R.string.dialog_delete);
+        bldr.setPositiveButton(R.string.dialog_delete_pos, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                deleteEntry();
+            }
+        });
+        bldr.setNegativeButton(R.string.dialog_delete_neg, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        AlertDialog dialog = bldr.create();
+        dialog.show();
+    }
+
+    private void deleteEntry() {
+        if (mCurrentBookUri != null) {
+            int rowsRemoved = getContentResolver().delete(mCurrentBookUri, null, null);
+            if (rowsRemoved != 0) {
+                Toast.makeText(this, getString(R.string.toast_delete_successful), Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, getString(R.string.toast_delete_failed), Toast.LENGTH_SHORT).show();
+            }
+        }
+        finish();
     }
 
     @Override

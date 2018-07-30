@@ -1,7 +1,6 @@
 <resources>
     <!-- App and activity names-->
     <string name="app_name">F&amp;B - Book Registry</string>
-    <string name="main_activity_name">F&amp;B - Book Registry</string>
     <string name="new_entry_activity_add">Register a new book</string>
     <string name="new_entry_activity_edit">Edit book information</string>
 
@@ -27,10 +26,16 @@
     <string name="toast_edit_successful">Changes saved in the database</string>
     <string name="toast_edit_failed">Changes could not be saved</string>
     <string name="toast_edit_no_changes">No changes</string>
+    <string name="toast_delete_failed">Error: cannot delete entry</string>
+    <string name="toast_delete_successful">Entry deleted from database</string>
     <!--Dialogs-->
-    <string name="dialog_unsaved_changes">Discard changes?</string>
-    <string name="dialog_discard_changes">Yes</string>
-    <string name="dialog_keep_editing">No, keep editing</string>
+    <string name="dialog_unsaved">Discard changes?</string>
+    <string name="dialog_unsaved_pos">Yes</string>
+    <string name="dialog_unsaved_neg">No, keep editing</string>
+
+    <string name="dialog_delete">Delete this entry from the database?</string>
+    <string name="dialog_delete_pos">Yes</string>
+    <string name="dialog_delete_neg">No</string>
 
     <!-- New entry - Spinner - subjects -->
     <string name="subject_unknown">Unclassifiable</string>
