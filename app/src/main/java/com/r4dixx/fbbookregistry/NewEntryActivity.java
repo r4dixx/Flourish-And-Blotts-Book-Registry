@@ -115,6 +115,27 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
         });
     }
 
+    public void increment(View v) {
+        int quantity = 0;
+        if (!TextUtils.isEmpty(mQuantityET.getText())) {
+            quantity = Integer.parseInt(mQuantityET.getText().toString().trim());
+        }
+        mQuantityET.setText(String.valueOf(quantity + 1));
+        mBookChanged = true;
+    }
+
+    public void decrement(View v) {
+        int quantity = 0;
+        if (!TextUtils.isEmpty(mQuantityET.getText())) {
+            quantity = Integer.parseInt(mQuantityET.getText().toString().trim());
+        }
+        if ((quantity - 1) >= 0) {
+            quantity--;
+        }
+        mQuantityET.setText(String.valueOf(quantity));
+        mBookChanged = true;
+    }
+
     private void setSpinner() {
 
         ArrayAdapter subjectSpinnerAdapter = ArrayAdapter.createFromResource(this, R.array.array_subjects, android.R.layout.simple_spinner_item);
@@ -387,7 +408,6 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
             int year = curs.getInt(yearColIndex);
             int subject = curs.getInt(subjectColIndex);
             int price = curs.getInt(priceColIndex);
-            int quantity = curs.getInt(quantityColIndex);
             String supplier = curs.getString(supplierColIndex);
             String phone = curs.getString(phoneColIndex);
 
@@ -396,7 +416,6 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
             mPublisherET.setText(publisher);
             mYearET.setText(String.valueOf(year));
             mPriceET.setText(String.valueOf(price));
-            mQuantityET.setText(String.valueOf(quantity));
             mSupplierET.setText(supplier);
             mSupplierPhoneET.setText(phone);
 
@@ -478,7 +497,7 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
         mPublisherET.getText().clear();
         mYearET.getText().clear();
         mPriceET.getText().clear();
-        mQuantityET.getText().clear();
+        mQuantityET.setText("1");
         mSupplierET.getText().clear();
         mSupplierPhoneET.getText().clear();
         mSubjectSpin.setSelection(0);

@@ -16,7 +16,7 @@
     <string name="hint_publisher">Publisher (leave blank if not applicable)</string>
     <string name="hint_year">Publication year</string>
     <string name="hint_subject">Class subject</string>
-    <string name="hint_price">Price (ʛ)</string>
+    <string name="hint_price">Unit price (ʛ)</string>
     <string name="hint_quantity">Quantity</string>
     <string name="hint_supplier">Supplier (leave blank if not applicable)</string>
     <string name="hint_phone">Supplier phone (leave blank if not applicable)</string>
