@@ -30,6 +30,7 @@
     <string name="toast_edit_missing_field">Cannot save changes.\nPlease fill all the mandatory fields:\n- title\n- author\n- year\n- price\n- quantity</string>
     <string name="toast_delete_failed">Error: cannot delete entry</string>
     <string name="toast_delete_successful">Entry deleted from database</string>
+    <string name="toast_no_phone">No phone number registered for this supplier</string>
     <!--Dialogs-->
     <string name="dialog_unsaved">Discard changes?</string>
     <string name="dialog_unsaved_pos">Yes</string>

@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -95,6 +96,23 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
         mSubjectSpin.setOnTouchListener(mTouchListener);
 
         setSpinner();
+
+        ImageView phoneIV = findViewById(R.id.edit_book_phone_intent);
+        phoneIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String number = mSupplierPhoneET.getText().toString();
+                if (TextUtils.isEmpty(number)) {
+                    Toast.makeText(NewEntryActivity.this, getString(R.string.toast_no_phone), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Intent in = new Intent(Intent.ACTION_DIAL);
+                in.setData(Uri.parse("tel:" + number));
+                if (in.resolveActivity(getPackageManager()) != null) {
+                    startActivity(in);
+                }
+            }
+        });
     }
 
     private void setSpinner() {
