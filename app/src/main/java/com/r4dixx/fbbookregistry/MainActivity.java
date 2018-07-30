@@ -81,6 +81,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         getContentResolver().insert(BookEntry.URI_FINAL, vals);
     }
 
+    private void deleteAll() {
+        getContentResolver().delete(BookEntry.URI_FINAL, null, null);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(com.r4dixx.fbbookregistry.R.menu.menu_main, menu);
@@ -96,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 newEntry();
                 return true;
             case com.r4dixx.fbbookregistry.R.id.action_delete_data:
-                // TODO this feature is now broken (it wasn't implemented correctly anyway
+                deleteAll();
                 return true;
         }
 
