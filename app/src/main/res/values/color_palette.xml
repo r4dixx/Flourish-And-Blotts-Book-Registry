@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Material color names -->
-    <color name="pink_800">@color/shiraz</color>
     <color name="pink_900">@color/matterhorn</color>
 
     <!-- "Regular" color names-->
