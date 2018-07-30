@@ -152,7 +152,7 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
         String phone = mSupplierPhoneET.getText().toString().trim();
 
         // If no field was modified, do nothing
-        if (mCurrentBookUri == null && TextUtils.isEmpty(title) && TextUtils.isEmpty(author) && TextUtils.isEmpty(publisher) && TextUtils.isEmpty(yearString) && TextUtils.isEmpty(priceString) && TextUtils.isEmpty(supplier) && TextUtils.isEmpty(supplier) && TextUtils.isEmpty(phone) && mSubject == SUBJECT_UNKNOWN) {
+        if (mCurrentBookUri == null && TextUtils.isEmpty(title) && TextUtils.isEmpty(author) && TextUtils.isEmpty(publisher) && TextUtils.isEmpty(yearString) && TextUtils.isEmpty(priceString) && mSubject == SUBJECT_UNKNOWN) {
             return;
         }
 
