@@ -31,6 +31,7 @@
     <string name="toast_delete_failed">Error: cannot delete entry</string>
     <string name="toast_delete_successful">Entry deleted from database</string>
     <string name="toast_no_phone">No phone number registered for this supplier</string>
+    <string name="toast_decrement_failed">Even in the wizarding world, ordering 0 book is not possible</string>
     <!--Dialogs-->
     <string name="dialog_unsaved">Discard changes?</string>
     <string name="dialog_unsaved_pos">Yes</string>

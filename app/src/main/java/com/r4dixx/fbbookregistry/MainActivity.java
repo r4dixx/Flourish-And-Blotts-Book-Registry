@@ -18,6 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.r4dixx.fbbookregistry.database.BookContract.BookEntry;
 
@@ -62,6 +64,22 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
 
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adptr, View v, int pos, long id) {
+                Uri mUri = ContentUris.withAppendedId(BookEntry.URI_FINAL, id);
+                TextView quantityTV = v.findViewById(R.id.quantity);
+                int quantity = Integer.valueOf(quantityTV.getText().toString()) - 1;
+                if (quantity < 1) {
+                    Toast.makeText(MainActivity.this, getString(R.string.toast_decrement_failed), Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                ContentValues values = new ContentValues();
+                values.put(BookEntry.COLUMN_QUANTITY, quantity);
+                getContentResolver().update(mUri, values, null, null);
+                return true;
+            }
+        });
     }
 
     private void newEntry() {
@@ -74,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         vals.put(BookEntry.COLUMN_YEAR, "1927");
         vals.put(BookEntry.COLUMN_SUBJECT, BookEntry.SUBJECT_CREATURES);
         vals.put(BookEntry.COLUMN_PRICE, "2");
-        vals.put(BookEntry.COLUMN_QUANTITY, BookEntry.QUANTITY_DEFAULT);
+        vals.put(BookEntry.COLUMN_QUANTITY, "2");
         vals.put(BookEntry.COLUMN_SUPPLIER, "Albus Dumbledore");
         vals.put(BookEntry.COLUMN_SUPPLIER_PHONE, "605-475-6961");
 

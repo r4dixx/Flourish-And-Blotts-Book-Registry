@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.r4dixx.fbbookregistry.database.BookContract.BookEntry;
 
+import static com.r4dixx.fbbookregistry.database.BookContract.BookEntry.QUANTITY_DEFAULT;
 import static com.r4dixx.fbbookregistry.database.BookContract.BookEntry.SUBJECT_UNKNOWN;
 
 public class NewEntryActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -46,6 +47,7 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
 
     private Spinner mSubjectSpin;
     private int mSubject = SUBJECT_UNKNOWN;
+    public int mQuantity = QUANTITY_DEFAULT;
     private boolean mBookChanged = false;
 
     private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
@@ -116,23 +118,21 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
     }
 
     public void increment(View v) {
-        int quantity = 0;
         if (!TextUtils.isEmpty(mQuantityET.getText())) {
-            quantity = Integer.parseInt(mQuantityET.getText().toString().trim());
+            mQuantity = Integer.parseInt(mQuantityET.getText().toString().trim());
         }
-        mQuantityET.setText(String.valueOf(quantity + 1));
+        mQuantityET.setText(String.valueOf(mQuantity + 1));
         mBookChanged = true;
     }
 
     public void decrement(View v) {
-        int quantity = 0;
         if (!TextUtils.isEmpty(mQuantityET.getText())) {
-            quantity = Integer.parseInt(mQuantityET.getText().toString().trim());
+            mQuantity = Integer.parseInt(mQuantityET.getText().toString().trim());
         }
-        if ((quantity - 1) >= 0) {
-            quantity--;
+        if ((mQuantity - 1) >= 0) {
+            mQuantity--;
         }
-        mQuantityET.setText(String.valueOf(quantity));
+        mQuantityET.setText(String.valueOf(mQuantity));
         mBookChanged = true;
     }
 
@@ -213,7 +213,7 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
         String priceString = mPriceET.getText().toString().trim();
         int price = Integer.parseInt(priceString);
         String quantityString = mQuantityET.getText().toString().trim();
-        int quantity = Integer.parseInt(quantityString);
+        mQuantity = Integer.parseInt(quantityString);
         String supplier = mSupplierET.getText().toString().trim();
         String phone = mSupplierPhoneET.getText().toString().trim();
 
@@ -229,7 +229,7 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
         values.put(BookEntry.COLUMN_YEAR, year);
         values.put(BookEntry.COLUMN_SUBJECT, mSubject);
         values.put(BookEntry.COLUMN_PRICE, price);
-        values.put(BookEntry.COLUMN_QUANTITY, quantity);
+        values.put(BookEntry.COLUMN_QUANTITY, mQuantity);
         values.put(BookEntry.COLUMN_SUPPLIER, supplier);
         values.put(BookEntry.COLUMN_SUPPLIER_PHONE, phone);
 
@@ -407,7 +407,7 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
             int year = curs.getInt(yearColIndex);
             int subject = curs.getInt(subjectColIndex);
             int price = curs.getInt(priceColIndex);
-            int quantity = curs.getInt(quantityColIndex);
+            mQuantity = curs.getInt(quantityColIndex);
             String supplier = curs.getString(supplierColIndex);
             String phone = curs.getString(phoneColIndex);
 
@@ -416,7 +416,7 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
             mPublisherET.setText(publisher);
             mYearET.setText(String.valueOf(year));
             mPriceET.setText(String.valueOf(price));
-            mQuantityET.setText(String.valueOf(quantity));
+            mQuantityET.setText(String.valueOf(mQuantity));
             mSupplierET.setText(supplier);
             mSupplierPhoneET.setText(phone);
 
