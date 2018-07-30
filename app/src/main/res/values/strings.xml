@@ -9,6 +9,7 @@
     <string name="action_insert_dummy_data">Actio, dummy book!</string>
     <string name="action_delete_all_data">Obliviate&#8230;</string>
     <string name="action_save_current_data">Petrificus Totalus</string>
+    <string name="action_delete_current_data">Avada Kedavra</string>
 
     <!-- New entry activity -->
     <string name="hint_title">Title</string>

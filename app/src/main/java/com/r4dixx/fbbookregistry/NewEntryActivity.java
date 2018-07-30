@@ -59,6 +59,7 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
             getLoaderManager().initLoader(LOADER, null, this);
         } else {
             setTitle(getString(R.string.new_entry_activity_add));
+            invalidateOptionsMenu();
         }
 
         mTitleET = findViewById(R.id.edit_book_title);
@@ -190,6 +191,16 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        if (mCurrentBookUri == null) {
+            MenuItem menuItem = menu.findItem(R.id.action_delete);
+            menuItem.setVisible(false);
+        }
+        return true;
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_new_entry, menu);
         return true;
@@ -203,6 +214,8 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
             case R.id.action_save:
                 newEntry();
                 finish();
+                return true;
+            case R.id.action_delete:
                 return true;
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
