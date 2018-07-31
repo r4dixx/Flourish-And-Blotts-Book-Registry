@@ -296,7 +296,7 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
         switch (item.getItemId()) {
             case R.id.action_save:
                 // If these fields are empty, stay here
-                if (TextUtils.isEmpty(mTitleET.getText()) || TextUtils.isEmpty(mAuthorET.getText()) || TextUtils.isEmpty(mYearET.getText()) || TextUtils.isEmpty(mPriceET.getText()) || TextUtils.isEmpty(mQuantityET.getText())) {
+                if (TextUtils.isEmpty(mTitleET.getText()) || TextUtils.isEmpty(mAuthorET.getText()) || TextUtils.isEmpty(mYearET.getText()) || TextUtils.isEmpty(mPriceET.getText()) || (mPriceET.getText().toString().matches("0")) || TextUtils.isEmpty(mQuantityET.getText()) || (mQuantityET.getText().toString().matches("0"))) {
                     // Hides keyboard if open...
                     View view = this.getCurrentFocus();
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
