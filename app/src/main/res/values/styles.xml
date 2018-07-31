@@ -11,6 +11,20 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="ToolBarTheme">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="popupTheme">@style/AppTheme.PopupOverlay</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="Base.ThemeOverlay.AppCompat.Light" />
+
+    <style name="NewEntryScrollViewTheme">
+        <item name="android:scrollbarSize">@dimen/scroll_bar_size</item>
+        <item name="android:scrollbarThumbVertical">@color/colorAccent</item>
+    </style>
+
     <style name="NewEntryTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/newEntryColorPrimary</item>
         <item name="colorPrimaryDark">@color/newEntryColorPrimaryDark</item>
@@ -19,14 +33,28 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="Base.ThemeOverlay.AppCompat.Light" />
-
-    <style name="EditTextTheme">
+    <style name="NewEntryTitleTextTheme" parent="TextAppearance.AppCompat.Tooltip">
         <item name="android:fontFamily">sans-serif-light</item>
-        <item name="android:textAppearance">?android:textAppearanceMedium</item>
-        <item name="android:inputType">textCapWords</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
     </style>
 
+    <style name="NewEntryEditTextTheme">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+    </style>
+
+    <style name="NewEntryIconTheme">
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+    <style name="NewEntryCurrency">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+        <item name="android:textColor">@color/newEntryColorCurrency</item>
+    </style>
 </resources>

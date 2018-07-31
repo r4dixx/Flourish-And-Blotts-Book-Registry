@@ -5,4 +5,5 @@
     <color name="colorAccent">@color/shiraz</color>
     <color name="newEntryColorPrimary">@color/colorAccent</color>
     <color name="newEntryColorPrimaryDark">@color/colorAccent</color>
+    <color name="newEntryColorCurrency">@color/black</color>
 </resources>

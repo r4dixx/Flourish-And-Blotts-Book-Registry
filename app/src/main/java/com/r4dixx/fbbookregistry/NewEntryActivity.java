@@ -2,6 +2,7 @@ package com.r4dixx.fbbookregistry;
 
 import android.app.LoaderManager;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,7 +11,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -150,6 +151,9 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
             @Override
             public void onItemSelected(AdapterView<?> par, View v, int pos, long id) {
                 String selected = (String) par.getItemAtPosition(pos);
+
+                // Padding similar to EditTexts
+                v.setPadding(8, v.getPaddingTop(), v.getPaddingRight(), v.getPaddingBottom());
 
                 // TODO this could be a looot cleaner. With a switch maybe or even better a loop
                 if (!TextUtils.isEmpty(selected)) {
@@ -293,28 +297,25 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
             case R.id.action_save:
                 // If these fields are empty, stay here
                 if (TextUtils.isEmpty(mTitleET.getText()) || TextUtils.isEmpty(mAuthorET.getText()) || TextUtils.isEmpty(mYearET.getText()) || TextUtils.isEmpty(mPriceET.getText()) || TextUtils.isEmpty(mQuantityET.getText())) {
+                    // Hides keyboard if open...
+                    View view = this.getCurrentFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (imm.isActive(view)) {
+                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    }
+                    // ... to properly show the toast message
                     Toast.makeText(this, getString(R.string.toast_edit_missing_field), Toast.LENGTH_LONG).show();
                     return false;
-                } else
-                newEntry();
-                finish();
+                } else if (!mBookChanged) {
+                    Toast.makeText(this, getString(R.string.toast_edit_no_changes), Toast.LENGTH_SHORT).show();
+                } else {
+                    newEntry();
+                    finish();
+                }
                 return true;
             case R.id.action_delete:
                 confirmDeletionDialog();
                 return true;
-            case R.id.home:
-                if (!mBookChanged) {
-                    NavUtils.navigateUpFromSameTask(this);
-                    Toast.makeText(this, getString(R.string.toast_edit_no_changes), Toast.LENGTH_SHORT).show();
-                    DialogInterface.OnClickListener discardButtonClickListener = new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            NavUtils.navigateUpFromSameTask(NewEntryActivity.this);
-                        }
-                    };
-                    exitEditionDialog(discardButtonClickListener);
-                    return true;
-                }
         }
         return super.onOptionsItemSelected(item);
     }

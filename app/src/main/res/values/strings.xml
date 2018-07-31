@@ -11,15 +11,25 @@
     <string name="action_delete_current_data">Avada Kedavra</string>
 
     <!-- New entry activity -->
-    <string name="hint_title">Title</string>
-    <string name="hint_author">Author</string>
-    <string name="hint_publisher">Publisher (leave blank if not applicable)</string>
-    <string name="hint_year">Publication year</string>
-    <string name="hint_subject">Class subject</string>
-    <string name="hint_price">Unit price (ʛ)</string>
-    <string name="hint_quantity">Quantity</string>
-    <string name="hint_supplier">Supplier (leave blank if not applicable)</string>
-    <string name="hint_phone">Supplier phone (leave blank if not applicable)</string>
+    <!-- Titles -->
+    <string name="edit_book_title_title">Title</string>
+    <string name="edit_book_title_author">Author</string>
+    <string name="edit_book_title_publisher">Publisher</string>
+    <string name="edit_book_title_year">Publication year</string>
+    <string name="edit_book_title_subject">Subject</string>
+    <string name="edit_book_title_quantity">Quantity</string>
+    <string name="edit_book_title_price">Unit price</string>
+    <string name="edit_book_title_supplier">Supplier name</string>
+    <string name="edit_book_title_phone">Supplier phone</string>
+    <!-- Currency-->
+    <string name="edit_book_price_currency">Galleons (ʛ)</string>
+    <!-- Hints -->
+    <string name="edit_book_hint_title">e.g. Fantastic Beasts and Where to Find Them</string>
+    <string name="edit_book_hint_author">e.g. Newton Scamander</string>
+    <string name="edit_book_hint_year">e.g. 1927</string>
+    <string name="edit_book_hint_quantity">e.g. 1</string>
+    <string name="edit_book_hint_price">e.g. 2</string>
+    <string name="edit_book_hint_blank">Leave blank if not applicable</string>
     <!-- Toasts -->
     <string name="toast_new_successful">Book saved</string>
     <string name="toast_new_failed">Cannot save book</string>
@@ -27,9 +37,9 @@
     <string name="toast_edit_failed">Changes could not be saved</string>
     <string name="toast_edit_no_changes">No changes</string>
     <!-- TODO: that string is way too long-->
-    <string name="toast_edit_missing_field">Cannot save changes.\nPlease fill all the mandatory fields:\n- title\n- author\n- year\n- price\n- quantity</string>
+    <string name="toast_edit_missing_field">Cannot save changes.\nPlease fill all the mandatory fields:\n- Title\n- Author\n- Publication year\n- Unit price\n- Quantity</string>
     <string name="toast_delete_failed">Error: cannot delete entry</string>
-    <string name="toast_delete_successful">Entry deleted from database</string>
+    <string name="toast_delete_successful">Entry deleted from the database</string>
     <string name="toast_no_phone">No phone number registered for this supplier</string>
     <string name="toast_decrement_failed">Even in the wizarding world, registering 0 book is not possible</string>
     <string name="toast_book_sold">1 book removed from the database</string>

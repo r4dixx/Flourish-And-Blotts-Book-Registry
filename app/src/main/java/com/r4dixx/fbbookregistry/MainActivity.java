@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         vals.put(BookEntry.COLUMN_PUBLISHER, "Obscurus Books");
         vals.put(BookEntry.COLUMN_YEAR, "1927");
         vals.put(BookEntry.COLUMN_SUBJECT, BookEntry.SUBJECT_CREATURES);
-        vals.put(BookEntry.COLUMN_PRICE, "2");
+        vals.put(BookEntry.COLUMN_PRICE, "1000");
         vals.put(BookEntry.COLUMN_QUANTITY, "2");
         vals.put(BookEntry.COLUMN_SUPPLIER, "Albus Dumbledore");
         vals.put(BookEntry.COLUMN_SUPPLIER_PHONE, "605-475-6961");
