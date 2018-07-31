@@ -1,12 +1,17 @@
 package com.r4dixx.fbbookregistry;
 
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.r4dixx.fbbookregistry.database.BookContract;
 
@@ -28,6 +33,7 @@ public class BookCursorAdapter extends CursorAdapter {
         TextView yearTV = v.findViewById(R.id.year);
         TextView priceTV = v.findViewById(R.id.price);
         TextView quantityTV = v.findViewById(R.id.quantity);
+        ImageView removeBook = v.findViewById(R.id.remove_book);
 
         int titleIndex = curs.getColumnIndex(BookContract.BookEntry.COLUMN_TITLE);
         int authorIndex = curs.getColumnIndex(BookContract.BookEntry.COLUMN_AUTHOR);
@@ -46,5 +52,37 @@ public class BookCursorAdapter extends CursorAdapter {
         yearTV.setText(year);
         priceTV.setText(price);
         quantityTV.setText(quantity);
+
+        long id = curs.getLong(curs.getColumnIndex(BookContract.BookEntry._ID));
+        removeBook.setOnClickListener(new soldOnClickListener(id, cont, quantityTV));
+    }
+
+    private class soldOnClickListener implements View.OnClickListener {
+        long mId;
+        Context mContext;
+        TextView mQuantityTV;
+        Uri mUri;
+
+        public soldOnClickListener(long id, Context cont, TextView quantityTV) {
+            this.mId = id;
+            this.mContext = cont;
+            this.mQuantityTV = quantityTV;
+            mUri = ContentUris.withAppendedId(BookContract.BookEntry.URI_FINAL, id);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int quantity = Integer.valueOf(mQuantityTV.getText().toString().trim()) - 1;
+
+            if (quantity < 1) {
+                Toast.makeText(mContext, R.string.toast_decrement_failed, Toast.LENGTH_SHORT).show();
+                return;
+            } else {
+                Toast.makeText(mContext, R.string.toast_book_sold, Toast.LENGTH_SHORT).show();
+            }
+            ContentValues vals = new ContentValues();
+            vals.put(BookContract.BookEntry.COLUMN_QUANTITY, quantity);
+            mContext.getContentResolver().update(mUri, vals, null, null);
+        }
     }
 }

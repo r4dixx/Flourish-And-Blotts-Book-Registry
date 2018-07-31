@@ -32,6 +32,7 @@
     <string name="toast_delete_successful">Entry deleted from database</string>
     <string name="toast_no_phone">No phone number registered for this supplier</string>
     <string name="toast_decrement_failed">Even in the wizarding world, registering 0 book is not possible</string>
+    <string name="toast_book_sold">1 book removed from the database</string>
     <!--Dialogs-->
     <string name="dialog_unsaved">Discard changes?</string>
     <string name="dialog_unsaved_pos">Yes</string>
