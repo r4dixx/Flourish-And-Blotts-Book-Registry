@@ -36,10 +36,11 @@
     <string name="dialog_unsaved">Discard changes?</string>
     <string name="dialog_unsaved_pos">Yes</string>
     <string name="dialog_unsaved_neg">No, keep editing</string>
-
     <string name="dialog_delete">Delete this entry from the database?</string>
     <string name="dialog_delete_pos">Yes</string>
     <string name="dialog_delete_neg">No</string>
+    <!-- Defaults -->
+    <string name="edit_book_quantity_default">1</string>
 
     <!-- New entry - Spinner - subjects -->
     <string name="subject_unknown">Unclassifiable</string>
