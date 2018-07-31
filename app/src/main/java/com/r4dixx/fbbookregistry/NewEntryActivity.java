@@ -132,6 +132,10 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
         if ((mQuantity - 1) >= 0) {
             mQuantity--;
         }
+        if (mQuantity < 1) {
+            Toast.makeText(NewEntryActivity.this, getString(R.string.toast_decrement_failed), Toast.LENGTH_SHORT).show();
+            return;
+        }
         mQuantityET.setText(String.valueOf(mQuantity));
         mBookChanged = true;
     }
@@ -291,7 +295,7 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
                 if (TextUtils.isEmpty(mTitleET.getText()) || TextUtils.isEmpty(mAuthorET.getText()) || TextUtils.isEmpty(mYearET.getText()) || TextUtils.isEmpty(mPriceET.getText()) || TextUtils.isEmpty(mQuantityET.getText())) {
                     Toast.makeText(this, getString(R.string.toast_edit_missing_field), Toast.LENGTH_LONG).show();
                     return false;
-                }
+                } else
                 newEntry();
                 finish();
                 return true;
