@@ -1,54 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="@dimen/activity_margins">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="Fantastic Beasts and Where to Find Them" />
-
-    <TextView
-        android:id="@+id/author"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="Newton Scamander" />
-
-    <TextView
-        android:id="@+id/year"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="1927" />
-
-    <LinearLayout
+    <android.support.v7.widget.CardView
+        android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_margin="@dimen/activity_margins"
+        card_view:cardCornerRadius="@dimen/cardCornerRadius"
+        card_view:cardElevation="@dimen/cardElevation"
+        card_view:cardUseCompatPadding="true">
 
-        <TextView
-            android:id="@+id/price"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            tools:text="ʛ2" />
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_margins">
 
-        <TextView
-            android:id="@+id/quantity"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            tools:text="1" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/ListItemTitleTextTheme"
+                tools:text="Fantastic Beasts and Where to Find Them" />
 
-    <ImageView
-        android:id="@+id/remove_book"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/ic_remove_circle_accent_24dp" />
-</LinearLayout>
+            <TextView
+                android:id="@+id/author_extra"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title"
+                android:layout_marginTop="@dimen/card_text_margin"
+                android:text="@string/author_extra"
+                android:theme="@style/ListItemTextExtraTheme" />
+
+            <TextView
+                android:id="@+id/author"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title"
+                android:layout_marginTop="@dimen/card_text_margin"
+                android:layout_toEndOf="@id/author_extra"
+                android:theme="@style/ListItemTextTheme"
+                tools:text="Newton Scamander" />
+
+            <TextView
+                android:id="@+id/year_extra"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/author_extra"
+                android:text="@string/year_extra"
+                android:theme="@style/ListItemTextExtraTheme" />
+
+            <TextView
+                android:id="@+id/year"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/author"
+                android:layout_toEndOf="@id/year_extra"
+                android:theme="@style/ListItemTextTheme"
+                tools:text="1927" />
+
+            <TextView
+                android:id="@+id/price_extra"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/year_extra"
+                android:layout_marginTop="@dimen/card_text_margin"
+                android:text="@string/price_extra"
+                android:theme="@style/ListItemTextExtraTheme" />
+
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/year"
+                android:layout_marginTop="@dimen/card_text_margin"
+                android:layout_toEndOf="@id/price_extra"
+                android:theme="@style/ListItemTextTheme"
+                tools:text="1927" />
+
+            <TextView
+                android:id="@+id/quantity_extra"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/price_extra"
+                android:text="@string/quantity_extra"
+                android:theme="@style/ListItemTextExtraTheme" />
+
+            <TextView
+                android:id="@+id/quantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/price"
+                android:layout_toEndOf="@id/quantity_extra"
+                android:theme="@style/ListItemTextTheme"
+                tools:text="1" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/quantity_extra"
+                android:layout_marginTop="@dimen/activity_margins"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/remove_book"
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:layout_alignParentStart="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/cd_listitem_minus"
+                    android:src="@drawable/ic_remove_circle_outline_24dp" />
+
+                <ImageView
+                    android:id="@+id/add_book"
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:layout_alignParentEnd="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/cd_listitem_plus"
+                    android:src="@drawable/ic_add_circle_outline_24dp" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</FrameLayout>

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/pink_900</color>
-    <color name="colorPrimaryDark">@color/pink_900</color>
+    <color name="colorPrimary">@color/matterhorn</color>
+    <color name="colorPrimaryDark">@color/matterhorn</color>
     <color name="colorAccent">@color/shiraz</color>
-    <color name="newEntryColorPrimary">@color/colorAccent</color>
-    <color name="newEntryColorPrimaryDark">@color/colorAccent</color>
-    <color name="newEntryColorCurrency">@color/black</color>
+    <color name="colorError">@color/rose</color>
 </resources>

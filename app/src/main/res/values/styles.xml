@@ -1,9 +1,11 @@
 <resources>
-
+    <!--App-->
     <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -11,26 +13,63 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="AppTheme.AppBarOverlay" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="Base.ThemeOverlay.AppCompat.Light" />
+
+    <!--Toolbar-->
     <style name="ToolBarTheme">
         <item name="android:background">?attr/colorPrimary</item>
         <item name="popupTheme">@style/AppTheme.PopupOverlay</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <!--Main-->
+    <style name="EmptyViewTextTheme">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">@dimen/emptyTitle</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
 
-    <style name="AppTheme.PopupOverlay" parent="Base.ThemeOverlay.AppCompat.Light" />
+    <style name="MainListViewTheme">
+        <item name="android:scrollbarSize">@dimen/scroll_bar_size</item>
+        <item name="android:scrollbarThumbVertical">@color/colorPrimary</item>
+        <item name="android:divider">@null</item>
+        <item name="android:dividerHeight">-34dp</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
 
+    <style name="ListItemTitleTextTheme">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">@dimen/cardTitle</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="ListItemTextTheme">
+        <item name="android:fontFamily">sans-serif</item>>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textSize">@dimen/cardDesc</item>
+    </style>
+
+    <style name="ListItemTextExtraTheme">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textSize">@dimen/cardDesc</item>
+    </style>
+
+    <!--New Entry-->
     <style name="NewEntryScrollViewTheme">
         <item name="android:scrollbarSize">@dimen/scroll_bar_size</item>
         <item name="android:scrollbarThumbVertical">@color/colorAccent</item>
     </style>
 
     <style name="NewEntryTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/newEntryColorPrimary</item>
-        <item name="colorPrimaryDark">@color/newEntryColorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/colorAccent</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
 
     <style name="NewEntryTitleTextTheme" parent="TextAppearance.AppCompat.Tooltip">
@@ -55,6 +94,10 @@
     <style name="NewEntryCurrency">
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textAppearance">?android:textAppearanceMedium</item>
-        <item name="android:textColor">@color/newEntryColorCurrency</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="error_appearance" parent="TextAppearance.Design.Error">
+        <item name="android:textColor">@color/colorError</item>
+        <item name="android:textStyle">bold</item>
     </style>
 </resources>

@@ -34,6 +34,7 @@ public class BookCursorAdapter extends CursorAdapter {
         TextView priceTV = v.findViewById(R.id.price);
         TextView quantityTV = v.findViewById(R.id.quantity);
         ImageView removeBook = v.findViewById(R.id.remove_book);
+        ImageView addBook = v.findViewById(R.id.add_book);
 
         int titleIndex = curs.getColumnIndex(BookContract.BookEntry.COLUMN_TITLE);
         int authorIndex = curs.getColumnIndex(BookContract.BookEntry.COLUMN_AUTHOR);
@@ -55,6 +56,7 @@ public class BookCursorAdapter extends CursorAdapter {
 
         long id = curs.getLong(curs.getColumnIndex(BookContract.BookEntry._ID));
         removeBook.setOnClickListener(new soldOnClickListener(id, cont, quantityTV));
+        addBook.setOnClickListener(new addedOnClickListener(id, cont, quantityTV));
     }
 
     private class soldOnClickListener implements View.OnClickListener {
@@ -84,5 +86,29 @@ public class BookCursorAdapter extends CursorAdapter {
             vals.put(BookContract.BookEntry.COLUMN_QUANTITY, quantity);
             mContext.getContentResolver().update(mUri, vals, null, null);
         }
+    }
+
+    private class addedOnClickListener implements View.OnClickListener {
+        long mId;
+        Context mContext;
+        TextView mQuantityTV;
+        Uri mUri;
+
+        public addedOnClickListener(long id, Context cont, TextView quantityTV) {
+            this.mId = id;
+            this.mContext = cont;
+            this.mQuantityTV = quantityTV;
+            mUri = ContentUris.withAppendedId(BookContract.BookEntry.URI_FINAL, id);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int quantity = Integer.valueOf(mQuantityTV.getText().toString().trim()) + 1;
+            ContentValues vals = new ContentValues();
+            vals.put(BookContract.BookEntry.COLUMN_QUANTITY, quantity);
+            mContext.getContentResolver().update(mUri, vals, null, null);
+            Toast.makeText(mContext, R.string.toast_book_added, Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

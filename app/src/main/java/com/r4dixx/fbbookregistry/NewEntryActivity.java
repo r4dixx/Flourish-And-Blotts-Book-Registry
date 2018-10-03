@@ -11,6 +11,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -24,7 +26,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.r4dixx.fbbookregistry.database.BookContract.BookEntry;
@@ -66,6 +70,12 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
 
         Toolbar toolbar = findViewById(R.id.toolbar_new_entry);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+        decorView.setSystemUiVisibility(uiOptions);
 
         Intent intent = getIntent();
         mCurrentBookUri = intent.getData();
@@ -296,7 +306,9 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
         switch (item.getItemId()) {
             case R.id.action_save:
                 // If these fields are empty, stay here
-                if (TextUtils.isEmpty(mTitleET.getText()) || TextUtils.isEmpty(mAuthorET.getText()) || TextUtils.isEmpty(mYearET.getText()) || TextUtils.isEmpty(mPriceET.getText()) || (mPriceET.getText().toString().matches("0")) || TextUtils.isEmpty(mQuantityET.getText()) || (mQuantityET.getText().toString().matches("0"))) {
+                if (TextUtils.isEmpty(mTitleET.getText()) || TextUtils.isEmpty(mAuthorET.getText()) || TextUtils.isEmpty(mYearET.getText())
+                        || TextUtils.isEmpty(mPriceET.getText()) || (mPriceET.getText().toString().matches("0")) || TextUtils.isEmpty(mQuantityET.getText())
+                        || (mQuantityET.getText().toString().matches("0"))) {
                     // Hides keyboard if open...
                     View view = this.getCurrentFocus();
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -304,7 +316,58 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
                         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                     }
                     // ... to properly show the toast message
-                    Toast.makeText(this, getString(R.string.toast_edit_missing_field), Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, getString(R.string.toast_edit_failed), Toast.LENGTH_LONG).show();
+                    // Also, show warnings per field
+                    TextView tvTitle = findViewById(R.id.edit_book_title_title);
+                    TextView tvAuthor = findViewById(R.id.edit_book_title_author);
+                    TextView tvPublisher = findViewById(R.id.edit_book_title_publisher);
+                    TextView tvYear = findViewById(R.id.edit_book_title_year);
+                    TextView tvSubject = findViewById(R.id.edit_book_title_subject);
+                    TextView tvPrice = findViewById(R.id.edit_book_title_price);
+                    TextView tvQuantity = findViewById(R.id.edit_book_title_quantity);
+                    TextView tvSupplier = findViewById(R.id.edit_book_title_supplier);
+
+                    TextInputLayout tilTitle = findViewById(R.id.til_title);
+                    if (TextUtils.isEmpty(mTitleET.getText())) {
+                        tilTitle.setError(getString(R.string.edit_book_validation_title));
+                        tvTitle.setTextColor(this.getResources().getColor(R.color.colorError));
+                        tvAuthor.setPadding(0, this.getResources().getDimensionPixelSize(R.dimen.new_entry_padding_extra), 0, 0);
+                    }
+                    TextInputLayout tilAuthor = findViewById(R.id.til_author);
+                    if (TextUtils.isEmpty(mAuthorET.getText())) {
+                        tilAuthor.setError(getString(R.string.edit_book_validation_author));
+                        tvAuthor.setTextColor(this.getResources().getColor(R.color.colorError));
+                        tvPublisher.setPadding(0, this.getResources().getDimensionPixelSize(R.dimen.new_entry_padding_extra), 0, 0);
+                    }
+                    TextInputLayout tilYear = findViewById(R.id.til_year);
+                    if (TextUtils.isEmpty(mYearET.getText())) {
+                        tilYear.setError(getString(R.string.edit_book_validation_year));
+                        tvYear.setTextColor(this.getResources().getColor(R.color.colorError));
+                        tvSubject.setPadding(0, this.getResources().getDimensionPixelSize(R.dimen.new_entry_padding_extra), 0, 0);
+                    }
+                    TextInputLayout tilQuantity = findViewById(R.id.til_quantity);
+                    if (TextUtils.isEmpty(mQuantityET.getText())) {
+                        tilQuantity.setError(getString(R.string.edit_book_validation_quantity));
+                        tvQuantity.setTextColor(this.getResources().getColor(R.color.colorError));
+                        LinearLayout quantityBlock = findViewById(R.id.quantity_block);
+                        quantityBlock.setPadding(0, this.getResources().getDimensionPixelSize(R.dimen.new_entry_padding_extra), 0, 0);
+                    } else if ((mQuantityET.getText().toString().matches("0"))) {
+                        tilQuantity.setError(getString(R.string.edit_book_validation_quantity_zero));
+                        tvQuantity.setTextColor(this.getResources().getColor(R.color.colorError));
+                        LinearLayout quantityBlock = findViewById(R.id.quantity_block);
+                        quantityBlock.setPadding(0, this.getResources().getDimensionPixelSize(R.dimen.new_entry_padding_extra), 0, 0);
+                    }
+                    TextInputLayout tilPrice = findViewById(R.id.til_price);
+                    if (TextUtils.isEmpty(mPriceET.getText())) {
+                        tilPrice.setError(getString(R.string.edit_book_validation_price));
+                        tvPrice.setTextColor(this.getResources().getColor(R.color.colorError));
+                        tvSupplier.setPadding(0, this.getResources().getDimensionPixelSize(R.dimen.new_entry_padding_extra), 0, 0);
+                    } else if (mPriceET.getText().toString().matches("0")) {
+                        tilPrice.setError(getString(R.string.edit_book_validation_price_zero));
+                        tvPrice.setTextColor(this.getResources().getColor(R.color.colorError));
+                        tvSupplier.setPadding(0, this.getResources().getDimensionPixelSize(R.dimen.new_entry_padding_extra), 0, 0);
+                    }
+                    // do not save
                     return false;
                 } else if (!mBookChanged) {
                     Toast.makeText(this, getString(R.string.toast_edit_no_changes), Toast.LENGTH_SHORT).show();
@@ -315,6 +378,20 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
                 return true;
             case R.id.action_delete:
                 confirmDeletionDialog();
+                return true;
+            case android.R.id.home:
+                if (!mBookChanged) {
+                    NavUtils.navigateUpFromSameTask(NewEntryActivity.this);
+                    return true;
+                }
+                DialogInterface.OnClickListener discardButtonClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        NavUtils.navigateUpFromSameTask(NewEntryActivity.this);
+                        finish();
+                    }
+                };
+                exitEditionDialog(discardButtonClickListener);
                 return true;
         }
         return super.onOptionsItemSelected(item);

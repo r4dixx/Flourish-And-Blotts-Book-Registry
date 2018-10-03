@@ -10,6 +10,15 @@
     <string name="action_save_current_data">Petrificus Totalus</string>
     <string name="action_delete_current_data">Avada Kedavra</string>
 
+    <!-- Empty state -->
+    <string name="empty_view">Nothing here...\n\nClick the button below\n(FAB) to add a book.\n\nOr click the top right menu\nfor dummy database entries.</string>
+
+    <!-- MainActivity -->
+    <string name="author_extra">Author:\u0020</string>
+    <string name="year_extra">Publication date:\u0020</string>
+    <string name="price_extra">Unit price (ʛ):\u0020</string>
+    <string name="quantity_extra">In stock:\u0020</string>
+
     <!-- New entry activity -->
     <!-- Titles -->
     <string name="edit_book_title_title">Title</string>
@@ -18,11 +27,9 @@
     <string name="edit_book_title_year">Publication year</string>
     <string name="edit_book_title_subject">Subject</string>
     <string name="edit_book_title_quantity">Quantity</string>
-    <string name="edit_book_title_price">Unit price</string>
+    <string name="edit_book_title_price">Unit price (ʛ)</string>
     <string name="edit_book_title_supplier">Supplier name</string>
     <string name="edit_book_title_phone">Supplier phone</string>
-    <!-- Currency-->
-    <string name="edit_book_price_currency">Galleons (ʛ)</string>
     <!-- Hints -->
     <string name="edit_book_hint_title">e.g. Fantastic Beasts and Where to Find Them</string>
     <string name="edit_book_hint_author">e.g. Newton Scamander</string>
@@ -30,19 +37,26 @@
     <string name="edit_book_hint_quantity">e.g. 1</string>
     <string name="edit_book_hint_price">e.g. 2</string>
     <string name="edit_book_hint_blank">Leave blank if not applicable</string>
+    <!-- Form validation-->
+    <string name="edit_book_validation_title">Book title must be provided</string>
+    <string name="edit_book_validation_author">Book author must be provided</string>
+    <string name="edit_book_validation_year">Book publication year must be provided</string>
+    <string name="edit_book_validation_price">Book price must be provided</string>
+    <string name="edit_book_validation_quantity">Book quantity in stock must be provided</string>
+    <string name="edit_book_validation_quantity_zero">Cannot register 0 book</string>
+    <string name="edit_book_validation_price_zero">Cannot register book priced at 0</string>
     <!-- Toasts -->
     <string name="toast_new_successful">Book saved</string>
     <string name="toast_new_failed">Cannot save book</string>
     <string name="toast_edit_successful">Changes saved in the database</string>
     <string name="toast_edit_failed">Changes could not be saved</string>
     <string name="toast_edit_no_changes">No changes</string>
-    <!-- TODO: that string is way too long-->
-    <string name="toast_edit_missing_field">Cannot save changes.\nPlease fill all the mandatory fields:\n- Title\n- Author\n- Publication year\n- Unit price\n- Quantity</string>
     <string name="toast_delete_failed">Error: cannot delete entry</string>
     <string name="toast_delete_successful">Entry deleted from the database</string>
     <string name="toast_no_phone">No phone number registered for this supplier</string>
     <string name="toast_decrement_failed">Even in the wizarding world, registering 0 book is not possible</string>
     <string name="toast_book_sold">1 book removed from the database</string>
+    <string name="toast_book_added">1 book added to the database</string>
     <!--Dialogs-->
     <string name="dialog_unsaved">Discard changes?</string>
     <string name="dialog_unsaved_pos">Yes</string>
@@ -52,7 +66,6 @@
     <string name="dialog_delete_neg">No</string>
     <!-- Defaults -->
     <string name="edit_book_quantity_default">1</string>
-
     <!-- New entry - Spinner - subjects -->
     <string name="subject_unknown">Unclassifiable</string>
     <string name="subject_alchemy">Alchemy</string>
@@ -76,4 +89,10 @@
     <string name="subject_potions">Potions</string>
     <string name="subject_transfiguration">Transfiguration</string>
     <string name="subject_xylomancy">Xylomancy</string>
+    <!--Content descriptions-->
+    <string name="cd_listitem_plus">Plus button (to add a book)</string>
+    <string name="cd_listitem_minus">Minus button (to remove a book)</string>
+    <string name="cd_newentry_phone">Phone button to make a phone call</string>
+    <string name="cd_newentry_plus">Plus button to increment the quantity by one</string>
+    <string name="cd_newentry_minus">Minus button to decrement the quantity by one</string>
 </resources>

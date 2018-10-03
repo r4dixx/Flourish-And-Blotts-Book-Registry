@@ -33,8 +33,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(com.r4dixx.fbbookregistry.R.layout.activity_main);
         Toolbar toolbar = findViewById(com.r4dixx.fbbookregistry.R.id.toolbar_main);
-        toolbar.setOverflowIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_bug_report_white_24dp));
+        toolbar.setOverflowIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_bug_report_24dp));
         setSupportActionBar(toolbar);
+
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+        decorView.setSystemUiVisibility(uiOptions);
 
         FloatingActionButton fab = findViewById(com.r4dixx.fbbookregistry.R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -48,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         ListView lv = findViewById(R.id.list);
         View emptyView = findViewById(R.id.empty_view);
         lv.setEmptyView(emptyView);
-
         mCursAdpt = new BookCursorAdapter(this, null);
         lv.setAdapter(mCursAdpt);
 
@@ -58,8 +61,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onItemClick(AdapterView<?> adptV, View v, int pos, long id) {
                 Intent intent = new Intent(MainActivity.this, NewEntryActivity.class);
-                Uri currentPetUri = ContentUris.withAppendedId(BookEntry.URI_FINAL, id);
-                intent.setData(currentPetUri);
+                Uri currentBookUri = ContentUris.withAppendedId(BookEntry.URI_FINAL, id);
+                intent.setData(currentBookUri);
                 startActivity(intent);
             }
         });
@@ -69,11 +72,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             public boolean onItemLongClick(AdapterView<?> adptr, View v, int pos, long id) {
                 Uri mUri = ContentUris.withAppendedId(BookEntry.URI_FINAL, id);
                 TextView quantityTV = v.findViewById(R.id.quantity);
-                int quantity = Integer.valueOf(quantityTV.getText().toString()) - 1;
-                if (quantity < 1) {
-                    Toast.makeText(MainActivity.this, getString(R.string.toast_decrement_failed), Toast.LENGTH_SHORT).show();
-                    return false;
-                }
+                int quantity = Integer.valueOf(quantityTV.getText().toString()) + 1;
+                Toast.makeText(MainActivity.this, R.string.toast_book_added, Toast.LENGTH_SHORT).show();
                 ContentValues values = new ContentValues();
                 values.put(BookEntry.COLUMN_QUANTITY, quantity);
                 getContentResolver().update(mUri, values, null, null);
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         ContentValues vals = new ContentValues();
 
-        vals.put(BookEntry.COLUMN_TITLE, "Fantastic Beasts and Where to Find Them");
+        vals.put(BookEntry.COLUMN_TITLE, "Fantastic Beasts & Where to Find Them");
         vals.put(BookEntry.COLUMN_AUTHOR, "Newton Scamander");
         vals.put(BookEntry.COLUMN_PUBLISHER, "Obscurus Books");
         vals.put(BookEntry.COLUMN_YEAR, "1927");
