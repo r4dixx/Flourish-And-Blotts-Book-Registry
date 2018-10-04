@@ -2,6 +2,8 @@
 <h1 align="center">Flourish & Blotts - Book Registry</h1>
 <p align="center"><strong>Inventory app for the Harry Potter universe</strong>
 <br>First app with data storing capabilities 📱🗃✨</p>
+<br/>
+<div align="center"><img src="demo.gif"></img></div>
 <h2>About</h2>
 Final student project made in 2017-2018 as part of <a href="https://eu.udacity.com/course/android-basics-nanodegree-by-google--nd803" target="_blank">Udacity's Android Basics Nanodegree</a>.
 
