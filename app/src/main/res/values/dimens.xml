@@ -6,16 +6,14 @@
     <!-- Margins-->
     <dimen name="activity_margins">16dp</dimen>
     <dimen name="fab_margin">@dimen/activity_margins</dimen>
-    <dimen name="new_entry_item_spacing">@dimen/activity_margins</dimen>
     <dimen name="new_entry_icon_margin_extra">2dp</dimen>
     <dimen name="new_entry_field_with_icon_margin_extra">8dp</dimen>
     <!-- Padding-->
-    <dimen name="new_entry_padding_extra">16dp</dimen>
+    <dimen name="new_entry_padding_extra">@dimen/activity_margins</dimen>
     <!-- Cards -->
     <dimen name="cardTitle">18sp</dimen>
     <dimen name="cardDesc">14sp</dimen>
     <dimen name="card_text_margin">8dp</dimen>
     <dimen name="cardCornerRadius">8dp</dimen>
     <dimen name="cardElevation">8dp</dimen>
-    <dimen name="margin_offset">-8dp</dimen>
 </resources>

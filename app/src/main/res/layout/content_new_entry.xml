@@ -62,14 +62,12 @@
         </android.support.design.widget.TextInputLayout>
 
         <TextView
-            android:id="@+id/edit_book_title_publisher"
             style="@style/NewEntryTitleTextTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/edit_book_title_publisher" />
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/til_publisher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -107,7 +105,6 @@
         </android.support.design.widget.TextInputLayout>
 
         <TextView
-            android:id="@+id/edit_book_title_subject"
             style="@style/NewEntryTitleTextTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -135,12 +132,12 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/new_entry_padding_extra"
             app:errorEnabled="true"
-            app:hintEnabled="false"
-            app:errorTextAppearance="@style/error_appearance">
+            app:errorTextAppearance="@style/error_appearance"
+            app:hintEnabled="false">
 
             <LinearLayout
-                android:layout_width="match_parent"
                 android:id="@+id/quantity_block"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
@@ -159,7 +156,7 @@
                     style="@style/NewEntryEditTextTheme"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
+                    android:gravity="center"
                     android:hint="@string/edit_book_hint_quantity"
                     android:inputType="number"
                     android:paddingStart="@dimen/new_entry_field_with_icon_margin_extra"
@@ -203,14 +200,12 @@
         </android.support.design.widget.TextInputLayout>
 
         <TextView
-            android:id="@+id/edit_book_title_supplier"
             style="@style/NewEntryTitleTextTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/edit_book_title_supplier" />
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/til_supplier"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -245,7 +240,6 @@
                 android:src="@drawable/ic_phone_accent_24dp" />
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/til_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 

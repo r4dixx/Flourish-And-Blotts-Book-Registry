@@ -38,13 +38,9 @@
     <string name="edit_book_hint_price">e.g. 2</string>
     <string name="edit_book_hint_blank">Leave blank if not applicable</string>
     <!-- Form validation-->
-    <string name="edit_book_validation_title">Book title must be provided</string>
-    <string name="edit_book_validation_author">Book author must be provided</string>
-    <string name="edit_book_validation_year">Book publication year must be provided</string>
-    <string name="edit_book_validation_price">Book price must be provided</string>
-    <string name="edit_book_validation_quantity">Book quantity in stock must be provided</string>
+    <string name="edit_book_validation">This field is mandatory</string>
     <string name="edit_book_validation_quantity_zero">Cannot register 0 book</string>
-    <string name="edit_book_validation_price_zero">Cannot register book priced at 0</string>
+    <string name="edit_book_validation_price_zero">Cannot register book priced at ʛ0</string>
     <!-- Toasts -->
     <string name="toast_new_successful">Book saved</string>
     <string name="toast_new_failed">Cannot save book</string>
@@ -92,7 +88,6 @@
     <!--Content descriptions-->
     <string name="cd_listitem_plus">Plus button (to add a book)</string>
     <string name="cd_listitem_minus">Minus button (to remove a book)</string>
-    <string name="cd_newentry_phone">Phone button to make a phone call</string>
     <string name="cd_newentry_plus">Plus button to increment the quantity by one</string>
     <string name="cd_newentry_minus">Minus button to decrement the quantity by one</string>
 </resources>

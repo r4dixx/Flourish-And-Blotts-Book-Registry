@@ -143,7 +143,7 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
         if ((mQuantity - 1) >= 0) {
             mQuantity--;
         }
-        if (mQuantity < 1) {
+        if (mQuantity == 0) {
             Toast.makeText(NewEntryActivity.this, getString(R.string.toast_decrement_failed), Toast.LENGTH_SHORT).show();
             return;
         }
@@ -317,55 +317,71 @@ public class NewEntryActivity extends AppCompatActivity implements LoaderManager
                     }
                     // ... to properly show the toast message
                     Toast.makeText(this, getString(R.string.toast_edit_failed), Toast.LENGTH_LONG).show();
-                    // Also, show warnings per field
                     TextView tvTitle = findViewById(R.id.edit_book_title_title);
                     TextView tvAuthor = findViewById(R.id.edit_book_title_author);
-                    TextView tvPublisher = findViewById(R.id.edit_book_title_publisher);
                     TextView tvYear = findViewById(R.id.edit_book_title_year);
-                    TextView tvSubject = findViewById(R.id.edit_book_title_subject);
                     TextView tvPrice = findViewById(R.id.edit_book_title_price);
                     TextView tvQuantity = findViewById(R.id.edit_book_title_quantity);
-                    TextView tvSupplier = findViewById(R.id.edit_book_title_supplier);
+                    LinearLayout quantityBlock = findViewById(R.id.quantity_block);
 
+                    // Validation per field
                     TextInputLayout tilTitle = findViewById(R.id.til_title);
                     if (TextUtils.isEmpty(mTitleET.getText())) {
-                        tilTitle.setError(getString(R.string.edit_book_validation_title));
+                        tilTitle.setError(getString(R.string.edit_book_validation));
                         tvTitle.setTextColor(this.getResources().getColor(R.color.colorError));
-                        tvAuthor.setPadding(0, this.getResources().getDimensionPixelSize(R.dimen.new_entry_padding_extra), 0, 0);
+                        tilTitle.setPadding(0, 0, 0, this.getResources().getDimensionPixelSize(R.dimen.new_entry_padding_extra));
+                    } else {
+                        tilTitle.setError(null);
+                        tvTitle.setTextColor(this.getResources().getColor(R.color.colorAccent));
+                        tilTitle.setPadding(0, 0, 0, 0);
                     }
                     TextInputLayout tilAuthor = findViewById(R.id.til_author);
                     if (TextUtils.isEmpty(mAuthorET.getText())) {
-                        tilAuthor.setError(getString(R.string.edit_book_validation_author));
+                        tilAuthor.setError(getString(R.string.edit_book_validation));
                         tvAuthor.setTextColor(this.getResources().getColor(R.color.colorError));
-                        tvPublisher.setPadding(0, this.getResources().getDimensionPixelSize(R.dimen.new_entry_padding_extra), 0, 0);
+                        tilAuthor.setPadding(0, 0, 0, this.getResources().getDimensionPixelSize(R.dimen.new_entry_padding_extra));
+                    } else {
+                        tilAuthor.setError(null);
+                        tvAuthor.setTextColor(this.getResources().getColor(R.color.colorAccent));
+                        tilAuthor.setPadding(0, 0, 0, 0);
                     }
                     TextInputLayout tilYear = findViewById(R.id.til_year);
                     if (TextUtils.isEmpty(mYearET.getText())) {
-                        tilYear.setError(getString(R.string.edit_book_validation_year));
+                        tilYear.setError(getString(R.string.edit_book_validation));
                         tvYear.setTextColor(this.getResources().getColor(R.color.colorError));
-                        tvSubject.setPadding(0, this.getResources().getDimensionPixelSize(R.dimen.new_entry_padding_extra), 0, 0);
+                        tilYear.setPadding(0, 0, 0, this.getResources().getDimensionPixelSize(R.dimen.new_entry_padding_extra));
+                    } else {
+                        tilYear.setError(null);
+                        tvYear.setTextColor(this.getResources().getColor(R.color.colorAccent));
+                        tilYear.setPadding(0, 0, 0, 0);
                     }
                     TextInputLayout tilQuantity = findViewById(R.id.til_quantity);
                     if (TextUtils.isEmpty(mQuantityET.getText())) {
-                        tilQuantity.setError(getString(R.string.edit_book_validation_quantity));
+                        tilQuantity.setError(getString(R.string.edit_book_validation));
                         tvQuantity.setTextColor(this.getResources().getColor(R.color.colorError));
-                        LinearLayout quantityBlock = findViewById(R.id.quantity_block);
                         quantityBlock.setPadding(0, this.getResources().getDimensionPixelSize(R.dimen.new_entry_padding_extra), 0, 0);
                     } else if ((mQuantityET.getText().toString().matches("0"))) {
                         tilQuantity.setError(getString(R.string.edit_book_validation_quantity_zero));
                         tvQuantity.setTextColor(this.getResources().getColor(R.color.colorError));
-                        LinearLayout quantityBlock = findViewById(R.id.quantity_block);
                         quantityBlock.setPadding(0, this.getResources().getDimensionPixelSize(R.dimen.new_entry_padding_extra), 0, 0);
+                    } else {
+                        tilQuantity.setError(null);
+                        tvQuantity.setTextColor(this.getResources().getColor(R.color.colorAccent));
+                        quantityBlock.setPadding(0, 0, 0, 0);
                     }
                     TextInputLayout tilPrice = findViewById(R.id.til_price);
                     if (TextUtils.isEmpty(mPriceET.getText())) {
-                        tilPrice.setError(getString(R.string.edit_book_validation_price));
+                        tilPrice.setError(getString(R.string.edit_book_validation));
                         tvPrice.setTextColor(this.getResources().getColor(R.color.colorError));
-                        tvSupplier.setPadding(0, this.getResources().getDimensionPixelSize(R.dimen.new_entry_padding_extra), 0, 0);
+                        tilPrice.setPadding(0, 0, 0, this.getResources().getDimensionPixelSize(R.dimen.new_entry_padding_extra));
                     } else if (mPriceET.getText().toString().matches("0")) {
                         tilPrice.setError(getString(R.string.edit_book_validation_price_zero));
                         tvPrice.setTextColor(this.getResources().getColor(R.color.colorError));
-                        tvSupplier.setPadding(0, this.getResources().getDimensionPixelSize(R.dimen.new_entry_padding_extra), 0, 0);
+                        tilPrice.setPadding(0, this.getResources().getDimensionPixelSize(R.dimen.new_entry_padding_extra), 0, 0);
+                    } else {
+                        tilPrice.setError(null);
+                        tvPrice.setTextColor(this.getResources().getColor(R.color.colorAccent));
+                        tilPrice.setPadding(0, 0, 0, 0);
                     }
                     // do not save
                     return false;
